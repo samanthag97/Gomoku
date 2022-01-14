@@ -3,39 +3,18 @@
 public class Gomoku{
 	
 	public static void main(String[] args){
-		char[][] board = initialBoard();
-		board[5][7] = '/'; //changing output test
-		displayBoard(board);
+		Board board = new Board();
+		board.displayBoard(); //should be starting board
+		board.putAStone(5,7); //changing output test
+		board.displayBoard(); //now it's changed
+		board.putAStone(5,8); //second move
+		board.displayBoard(); //should have B and W
+		// !!! should be using tests and not prints to check the board !!!
 	}
 	
-	public static char[][] initialBoard(){
-		char[][] board = new char[15][15];
-		for(int i=0; i<15; i++){
-			for(int j=0; j<15; j++)
-				board[i][j] = '+';
-		}
-		return board;
-	}
-	
-	public static void displayBoard(char[][] board){
-		System.out.println();
-		int[] colonne = new int[15];
-		for(int i=0; i<15; i++){
-			colonne[i]= i+1;
-			System.out.printf("%3d", colonne[i]);
-		}
 
-		System.out.println();
-		System.out.println();
-		for(int i=0; i<15; i++){
-			for(int j=0; j<15; j++){
-				String board2 = "  " + String.valueOf(board[i][j]);
-				System.out.print(board2);
-			}
-			System.out.println("\t" + (i+1));
-		}
-		System.out.println();
-	}
+
+
 	
 	
 	/* FORMATTING MATRIX TEST 
