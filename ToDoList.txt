@@ -1,0 +1,33 @@
+GOMOKU
+
+si vince se si riesce a mettere 5 pedine
+dello stesso colore in fila (vert, oriz, obliq)
+
+
+
+TO DO LIST:
+
+- Display board: (array [15][15], inizialmente vuoto)
+	  1 2 3 ... 15 (uso i + visto che le pedine 
+	1 + + + ... +   vanno messe nelle intersezioni)
+	2 + + + ... +
+	3 + + + ... +	[A][B] A=righe, B=colonne
+	...
+	15 + + + .. +
+	
+- Player1/2 devono inserire le coordinate del posto in cui
+   inseriranno la pedina:
+	-verificare che le coordinate siano valide
+	 (all'interno della board, spazio non occupato, ...)
+	-controllare eventuali vittorie*
+	
+- Display pedine sulla board:
+	-nero e bianco, scegliere i simboli (es O,X)
+
+*CONTROLLARE EVENTUALI VITTORIE: (parte più complessa)
+	-5 in verticale: B resta fisso e vedo se ci sono
+					 5 pedine dello stesso colore di fila 
+					 al variare di A
+	-5 in orizzontale: come sopra ma A resta fisso e vario B
+	-5 in diagonale: A e B variano di +1 entrambe
+
