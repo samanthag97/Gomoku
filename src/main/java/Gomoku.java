@@ -1,16 +1,16 @@
 //main
 
-public class Gomoku{
-	
-	public static void main(String[] args){
-		Board board = new Board();
-		board.displayBoard(); //should be starting board
-		board.putAStone(5,7); //changing output test
-		board.displayBoard(); //now it's changed
-		board.putAStone(5,8); //second move
-		board.displayBoard(); //should have B and W
-		// !!! should be using tests and not prints to check the board !!!
-	}
+public class Gomoku {
+
+    public static void main(String[] args) {
+        Board board = new Board();
+        board.displayBoard(); //should be starting board
+        board.putAStone(5, 7); //changing output test
+        board.displayBoard(); //now it's changed
+        board.putAStone(5, 8); //second move
+        board.displayBoard(); //should have B and W
+        // !!! should be using tests and not prints to check the board !!!
+    }
 	
 
 
@@ -29,19 +29,8 @@ public class Gomoku{
 		}		
 	}
 	*/
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
 }
 
 

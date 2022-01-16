@@ -45,4 +45,8 @@ public class Board {
         }
         System.out.println();
     }
+
+    public static char[] getRow(int rowNumber) {
+        return board[rowNumber];
+    }
 }
