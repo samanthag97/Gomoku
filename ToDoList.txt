@@ -7,7 +7,7 @@ dello stesso colore in fila (vert, oriz, obliq)
 
 TO DO LIST:
 
-- Display board: (array [15][15], inizialmente vuoto)
+- Display board: (array [15][15], inizialmente vuoto)    [sarebbe da fare una classe a parte per tenere le cose più in ordine]
 	  1 2 3 ... 15 (uso i + visto che le pedine 
 	1 + + + ... +   vanno messe nelle intersezioni)
 	2 + + + ... +
