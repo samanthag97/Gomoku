@@ -4,7 +4,7 @@ public class Gomoku{
 	
 	public static void main(String[] args){
 		char[][] board = initialBoard();
-		board[5][7] = '/'; //changing output test
+		//board[5][7] = '/'; //changing output test
 		displayBoard(board);
 	}
 	
