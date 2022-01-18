@@ -65,6 +65,21 @@ public class Board {
         return board[rowNumber];
     }
 
+    public boolean sameColorInRow(int row) { //not working (???)
+        char currentPlayer;
+        if (colorFlag == true) currentPlayer = 'B';
+        else currentPlayer = 'W';
+        int sameColor = 0;
+        for (int column = 0; column < 15; column++) {
+            if (board[row][column] == currentPlayer)
+                sameColor++;
+            else sameColor = 0;
+            if (sameColor == winning)
+                return true;
+        }
+        return false;
+    }
+
     public boolean sameColorInRow(int row, int column) {
         row = row - 1; //player digita 5, ma array parte da 0, quindi 4
         column -= 1;
