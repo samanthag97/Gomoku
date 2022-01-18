@@ -71,10 +71,11 @@ public class Board {
 		boolean fiveInRow = false;
 		while(board[riga][indexOfFirstElement] == '+'){
 			indexOfFirstElement += 1;
-			counter = 1;
 			if(indexOfFirstElement >=15) //sono andato fuori dalla riga
 				break;
 		}
+		if(indexOfFirstElement<15)
+			counter = 1;
 		counter = inRow(indexOfFirstElement, riga);
 		
 		if(counter == winning)
