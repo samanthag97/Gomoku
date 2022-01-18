@@ -63,9 +63,9 @@ public class Board {
 
     public static char[] getRow(int rowNumber) {
         return board[rowNumber];
-    } //serve per il test
+    }
 
-    public boolean sameColorInRow(int row, int column) { //Buggy, funziona solo se le metto una per una in fila, se metto tre a dx, una a sn e poi la quinta in mezzo non va
+    public boolean sameColorInRow(int row, int column) {
         row = row - 1; //player digita 5, ma array parte da 0, quindi 4
         column -= 1;
         boolean fiveInRow = false;
@@ -73,7 +73,7 @@ public class Board {
         counter = inRow(row, column);
         //System.out.println(counter); //just a test
 
-        if (counter == winning - 1) //non lo so perchè ma con il -1 funziona LOL
+        if (counter == winning)
             fiveInRow = true;
         return fiveInRow;
     }
