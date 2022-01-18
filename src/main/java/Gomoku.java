@@ -15,11 +15,7 @@ public class Gomoku {
 		board.putAStone(5, 10); //b
 		board.putAStone(9, 7); //w
 		board.putAStone(5, 11); //b
-        board.displayBoard(); //should have B and W
-        // !!! should be using tests and not prints to check the board !!!
-		
-		if(board.sameColorInRow()==true)
-			System.out.println("WIN!!");
+        
 		
     }
 	

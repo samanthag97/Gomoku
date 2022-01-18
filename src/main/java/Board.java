@@ -20,7 +20,10 @@ public class Board {
         }
     }
 
-    public static void putAStone(int i, int j) {
+    public void putAStone(int i, int j) {
+		if(i>15 || j>15 || i<0 || j<0) //out of board
+			System.out.println("Invalid input. Please digit a valid one.");
+			
 		if(board[i-1][j-1] == '+'){ //position not taken yet
 		//OR SHOULD WE USE EXCEPTION??
 			if (colorFlag == true) {
@@ -28,9 +31,13 @@ public class Board {
 			} else {
 				board[i - 1][j - 1] = 'W';
 			}
-			colorFlag = !colorFlag; //changes color --> next player's turn
-		}
-		else System.out.println("Error, this position is already taken, choose another one.");
+			displayBoard(); //after adding a stone i display the board...
+			
+			if(sameColorInRow(i,j) == true){ //...and then check if that palyer won
+				System.out.println("\tWIN!!");
+			} else	colorFlag = !colorFlag; //otherwise keep playing: changes color --> next player's turn
+			
+		} else System.out.println("Error, this position is already taken, choose another one.");
     }
 
     public static void displayBoard() {
@@ -56,43 +63,57 @@ public class Board {
     public static char[] getRow(int rowNumber) {
         return board[rowNumber];
     }
-	
-	/*public boolean checkWinForB(){
-		if(fiveBlackInRow == true)
-			hasWon = true;		
-		return hasWon;
-	}*/
-	
-	public boolean sameColorInRow(){
-		//find first element == B/W in the row and check if next 4 are same
-		//facciamolo intanto per la riga 5: board[4]
-		int riga = 4;
-		int indexOfFirstElement = 0;
-		boolean fiveInRow = false;
-		while(board[riga][indexOfFirstElement] == '+'){
-			indexOfFirstElement += 1;
-			if(indexOfFirstElement >=15) //sono andato fuori dalla riga
-				break;
-		}
-		if(indexOfFirstElement<15)
-			counter = 1;
-		counter = inRow(indexOfFirstElement, riga);
+		
+	public boolean sameColorInRow(int row, int column){ //digited from player
+		row = row -1; //player digita 5, ma array parte da 0, quindi 4
+		column -= 1;
+		boolean fiveInRow = false;		
+		counter = 1; //da questo punto devo trovare altre 4 pedine uguali adiacenti
+		counter = inRow(row, column);	
+		//System.out.println(counter); //just a test
 		
 		if(counter == winning)
-			fiveInRow = true;
-		
+			fiveInRow = true;	
 		return fiveInRow;		
 	}
 	
-	public int inRow(int indexOfFirstElement, int riga){
-		if(indexOfFirstElement>=15)
+	public int inRow(int row, int column){
+		if(column>=15-1 || column<=0) //controllo che non vada fuori dai bordi
 			return counter;
-		if(board[riga][indexOfFirstElement] == board[riga][indexOfFirstElement+1]){ 
+		int counter1 = inRowAfter(row, column);
+		int counter2 = inRowBefore(row, column);
+		if(counter1 > counter2) //NO ME GUSTA TANTO
+			return counter1;
+		else return counter2;
+	}
+	
+	public int inRowAfter(int row, int column){ //a destra della pedina appena messa
+		if(board[row][column] == board[row][column+1]){ 
 			counter += 1;
-			indexOfFirstElement += 1;
-			inRow(indexOfFirstElement, riga);
+			column += 1;
+			inRowAfter(row, column);
 		}
 		return counter;
 	}
+	public int inRowBefore(int row, int column){ //a sinistra della pedina appena messa
+		if(board[row][column] == board[row][column-1]){ 
+			counter += 1;
+			column -= 1;
+			inRowBefore(row, column);
+		}
+		return counter;
+	}
+	
+	
+	
 		
+	//colonne: basta fare la trasposta e usare i metodi per le righe	
+	//diagonale:
+	/*
+	cerco il primo elemento B/W	in tutte le righe (vedi sopra). Quando trovo il primo
+	(vuol dire che nelle righe prima non c'era), controllo a dx (5inRow), sotto (5inColumn)
+	e poi controllo sotto a dx (board[i+1][i+1])
+	*/
+	
+	
 }
