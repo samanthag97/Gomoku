@@ -25,9 +25,12 @@ TO DO LIST:
 	-nero e bianco, scegliere i simboli (es O,X)
 
 *CONTROLLARE EVENTUALI VITTORIE: (parte più complessa)
-	-5 in verticale: B resta fisso e vedo se ci sono
+	-5 in verticale: B resta fisso e vedo se ci sono (basta fare la trasposta e usare i metodi per le righe)
 					 5 pedine dello stesso colore di fila 
 					 al variare di A
 	-5 in orizzontale: come sopra ma A resta fisso e vario B
-	-5 in diagonale: A e B variano di +1 entrambe
+	-5 in diagonale: A e B variano di +1 entrambe:
+		cerco il primo elemento B/W in tutte le righe. Quando trovo il primo
+		(vuol dire che nelle righe prima non c'era), controllo a dx (5inRow), sotto (5inColumn)
+		e poi controllo sotto a dx (board[i+1][i+1])
 
