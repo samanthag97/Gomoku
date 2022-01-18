@@ -5,11 +5,22 @@ public class Gomoku {
     public static void main(String[] args) {
         Board board = new Board();
         board.displayBoard(); //should be starting board
-        board.putAStone(5, 7); //changing output test
-        board.displayBoard(); //now it's changed
-        board.putAStone(5, 8); //second move
+        board.putAStone(5, 7); //changing output test (B)
+        //board.displayBoard(); //now it's changed
+        board.putAStone(6, 7); //second move W
+		board.putAStone(5, 8); //B
+		board.putAStone(2, 7); //w
+		board.putAStone(5, 9); //b
+		board.putAStone(3, 7); //w
+		board.putAStone(5, 10); //b
+		board.putAStone(9, 7); //w
+		board.putAStone(5, 11); //b
         board.displayBoard(); //should have B and W
         // !!! should be using tests and not prints to check the board !!!
+		
+		if(board.sameColorInRow()==true)
+			System.out.println("WIN!!");
+		
     }
 	
 
