@@ -3,6 +3,14 @@
 public class Gomoku {
 
     public static void main(String[] args) {
+
+		//super simple hell yes
+		Game game = new Game();
+		game.start();
+
+
+
+        /*
         Board board = new Board();
         board.displayBoard(); //should be starting board
         board.putAStone(5, 7); //changing output test (B)
@@ -15,6 +23,7 @@ public class Gomoku {
 		board.putAStone(5, 10); //b
 		board.putAStone(9, 7); //w
 		board.putAStone(5, 11); //b
+		*/
         
 		
     }
