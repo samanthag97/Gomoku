@@ -7,6 +7,8 @@ import java.io.PrintStream;
 
 public class GameSimulator {
 
+    //can do a single test that takes all the games one after the other
+
     @Test
     public void gameWithBlackRowWinner() {
         String gameMoves = "1 2 3 3 1 4 4 4 1 3 5 5 1 5 6 6 1 6 7 7";
