@@ -80,7 +80,7 @@ public class Board {
         return false;
     }
 
-    public boolean sameColorInColumn(int column) {
+    public boolean sameColorInColumn(int column) { //oppure trasposta e uso row?
         char currentPlayer = getCurrentPlayer();
         int sameColor = 0;
         for (int row = 0; row < 15; row++) {

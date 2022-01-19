@@ -38,4 +38,26 @@ public class GameSimulator {
         game.start();
     }
 
+    @Test
+    public void gameWithBlackDiagonalWinner() {
+        String gameMoves = "1 2 4 6 2 3 6 8 5 6 9 10 4 5 13 6 3 4";
+
+        ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
+        System.setIn(fakeInput);
+
+        Game game = new Game();
+        game.start();
+    }
+
+    @Test
+    public void gameWithWhiteDiagonalWinner() {
+        String gameMoves = "4 6 5 12 6 8 7 10 9 10 6 11 13 6 8 9 1 1 9 8";
+
+        ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
+        System.setIn(fakeInput);
+
+        Game game = new Game();
+        game.start();
+    }
+
 }

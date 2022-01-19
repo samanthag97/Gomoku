@@ -14,6 +14,7 @@ TO DO LIST:
 	3 + + + ... +	[A][B] A=righe, B=colonne
 	...
 	15 + + + .. +
+	(in teoria vanno le lettere orizzontalmente ad indicare le colonne)
 	
 - Player1/2 devono inserire le coordinate del posto in cui
    inseriranno la pedina:
@@ -34,3 +35,5 @@ TO DO LIST:
 		(vuol dire che nelle righe prima non c'era), controllo a dx (5inRow), sotto (5inColumn)
 		e poi controllo sotto a dx (board[i+1][i+1])
 
+MANCA IL CONTROLLO PER PIù DI CINQUE DI FILA:
+se ho esattamente 5 vinco, se sono di più no
