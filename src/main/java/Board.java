@@ -19,22 +19,25 @@ public class Board {
         }
     }
 
+    public char getCurrentPlayer() {
+        if (colorFlag == true) return 'B';
+        else return 'W';
+    }
+
     public void putAStone(int i, int j) {
         if (i > 15 || j > 15 || i < 0 || j < 0) //out of board
             System.out.println("Invalid input. Please digit a valid one.");
 
         else if (board[i - 1][j - 1] == '+') { //position not taken yet
             //OR SHOULD WE USE EXCEPTION??
-            if (colorFlag == true) {
-                board[i - 1][j - 1] = 'B'; //we have coordinates from 1, but in the array it's from 0, so we do -1
-            } else {
-                board[i - 1][j - 1] = 'W';
-            }
+            board[i - 1][j - 1] = getCurrentPlayer(); //we have coordinates from 1, but in the array it's from 0, so we do -1
+
             displayBoard(); //after adding a stone i display the board...
 
-            if (sameColorInRow(i-1) == true) { //...and then check if that palyer won
+            if (sameColorInRow(i - 1) == true) { //...and then check if that palyer won
                 hasWon = true;
                 System.out.println("\tWIN!!");
+                System.out.println("\t" + getCurrentPlayer() + " wins!");
             } else colorFlag = !colorFlag; //otherwise keep playing: changes color --> next player's turn
 
         } else System.out.println("Error, this position is already taken, choose another one.");
@@ -65,9 +68,7 @@ public class Board {
     } //for the test
 
     public boolean sameColorInRow(int row) {
-        char currentPlayer;
-        if (colorFlag == true) currentPlayer = 'B';
-        else currentPlayer = 'W';
+        char currentPlayer = getCurrentPlayer();
         int sameColor = 0;
         for (int column = 0; column < 15; column++) {
             if (board[row][column] == currentPlayer)
@@ -83,7 +84,7 @@ public class Board {
         if (hasWon == false) {
             String nextPlayer;
             if (colorFlag == true) { //B
-                nextPlayer = "black";
+                nextPlayer = "black"; //maybe with a switch?
             } else nextPlayer = "white";
             System.out.print("It's " + nextPlayer + "'s turn. ");
         }
