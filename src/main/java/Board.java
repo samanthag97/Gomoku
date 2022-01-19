@@ -34,7 +34,7 @@ public class Board {
 
             displayBoard(); //after adding a stone i display the board...
 
-            if (sameColorInRow(i - 1) == true) { //...and then check if that palyer won
+            if (sameColorInRow(i - 1) == true || sameColorInColumn(j - 1) == true) { //...and then check if that palyer won
                 hasWon = true;
                 System.out.println("\tWIN!!");
                 System.out.println("\t" + getCurrentPlayer() + " wins!");
@@ -71,6 +71,19 @@ public class Board {
         char currentPlayer = getCurrentPlayer();
         int sameColor = 0;
         for (int column = 0; column < 15; column++) {
+            if (board[row][column] == currentPlayer)
+                sameColor++;
+            else sameColor = 0;
+            if (sameColor == winning)
+                return true;
+        }
+        return false;
+    }
+
+    public boolean sameColorInColumn(int column) {
+        char currentPlayer = getCurrentPlayer();
+        int sameColor = 0;
+        for (int row = 0; row < 15; row++) {
             if (board[row][column] == currentPlayer)
                 sameColor++;
             else sameColor = 0;

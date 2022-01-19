@@ -27,4 +27,15 @@ public class GameSimulator {
         //assertEquals(expectedFinalBoard, fakeOutput.toString()); //to try and test the result
     }
 
+    @Test
+    public void gameWithWhiteColumnWinner() {
+        String gameMoves = "1 2 3 3 1 4 4 3 1 3 2 3 1 8 5 3 6 6 6 3";
+
+        ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
+        System.setIn(fakeInput);
+
+        Game game = new Game();
+        game.start();
+    }
+
 }
