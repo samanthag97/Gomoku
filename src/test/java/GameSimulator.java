@@ -41,7 +41,7 @@ public class GameSimulator {
     }
 
     @Test
-    public void gameWithBlackDiagonalWinner() {
+    public void gameWithBlackDiagonalWinnerUp() {
         String gameMoves = "1 2 4 6 2 3 6 8 5 6 9 10 4 5 13 6 3 4";
 
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
@@ -52,7 +52,29 @@ public class GameSimulator {
     }
 
     @Test
-    public void gameWithWhiteDiagonalWinner() {
+    public void gameWithBlackDiagonalWinnerDown() {
+        String gameMoves = "2 1 4 6 3 2 6 8 6 5 9 10 5 4 13 6 4 3";
+
+        ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
+        System.setIn(fakeInput);
+
+        Game game = new Game();
+        game.start();
+    }
+
+    @Test
+    public void gameWithWhiteDiagonalWinnerUp() {
+        String gameMoves = "4 6 2 12 6 7 4 10 9 10 3 11 13 6 5 9 1 1 6 8";
+
+        ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
+        System.setIn(fakeInput);
+
+        Game game = new Game();
+        game.start();
+    }
+
+    @Test
+    public void gameWithWhiteDiagonalWinnerDown() {
         String gameMoves = "4 6 5 12 6 8 7 10 9 10 6 11 13 6 8 9 1 1 9 8";
 
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());

@@ -25,7 +25,7 @@ public class Board {
     }
 
     public void putAStone(int i, int j) {
-        if (i > 15 || j > 15 || i < 0 || j < 0) //out of board
+        if (i > 15 || j > 15 || i < 1 || j < 1) //out of board
             System.out.println("Invalid input. Please digit a valid one.");
 
         else if (board[i - 1][j - 1] == '+') { //position not taken yet
@@ -34,7 +34,7 @@ public class Board {
 
             displayBoard(); //after adding a stone i display the board...
 
-            if (sameColorInRow(i - 1) == true || sameColorInColumn(j - 1) == true) { //...and then check if that palyer won
+            if (itsAWin(i - 1, j - 1)) { //...and then check if that palyer won
                 hasWon = true;
                 System.out.println("\tWIN!!");
                 System.out.println("\t" + getCurrentPlayer() + " wins!");
@@ -67,6 +67,12 @@ public class Board {
         return board[rowNumber];
     } //for the test
 
+    public boolean itsAWin(int row, int column) {
+        return sameColorInRow(row) || sameColorInColumn(column) ||
+                sameColorInGraveDiagonal(row, column) ||
+                sameColorInAcuteDiagonal(row, column);
+    }
+
     public boolean sameColorInRow(int row) {
         char currentPlayer = getCurrentPlayer();
         int sameColor = 0;
@@ -92,6 +98,65 @@ public class Board {
         }
         return false;
     }
+
+    public boolean sameColorInGraveDiagonal(int row, int column) {
+        //+1+1
+        char currentPlayer = getCurrentPlayer();
+        int sameColor = 0;
+        boolean goOn = true;
+        int i, j;
+        if (row <= column) {    //sopra alla diagonale principale
+            i = 0;
+            j = Math.abs(row - column);
+        } else {    //sotto alla diagonale principale
+            j = 0;
+            i = Math.abs(row - column);
+        }
+        while (goOn) {
+            if (board[i][j] == currentPlayer)
+                sameColor++;
+            else sameColor = 0;
+            if (sameColor == winning)
+                return true;
+            i++;
+            j++;
+            if (j >= 15 || i >= 15)
+                goOn = false;
+        }
+        return false;
+    }
+
+    /*Approach: The key observation to solve the problem is that the two elements of the matrix
+    are on the same diagonal only if the sum of the indices or the absolute difference of the
+    indices of the elements are equal.*/
+
+    public boolean sameColorInAcuteDiagonal(int row, int column) {
+        //+1-1
+        char currentPlayer = getCurrentPlayer();
+        int sameColor = 0;
+        boolean goOn = true;
+        int i, j;
+        if (row + column <= 14) {   //sopra alla diagonale principale
+            i = 0;
+            j = row + column;
+        } else {    //sotto alla diagonale principale
+            i = row + column - 14;
+            j = 14;
+        }
+        while (goOn) {
+            if (board[i][j] == currentPlayer)
+                sameColor++;
+            else sameColor = 0;
+            if (sameColor == winning)
+                return true;
+            i++;
+            j--;
+            if (i >= 15|| j < 0)
+                goOn = false;
+        }
+        return false;
+    }
+
 
     public void printWhoIsNext() {
         if (hasWon == false) {
