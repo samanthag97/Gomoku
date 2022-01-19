@@ -9,7 +9,7 @@ public class GameSimulator {
 
     @Test
     public void gameWithBlackRowWinner() {
-        String gameMoves = "1 2 3 3 1 3 4 4 1 4 5 5 1 5 6 6 1 6 7 7";
+        String gameMoves = "1 2 3 3 1 4 4 4 1 3 5 5 1 5 6 6 1 6 7 7";
         String expectedFinalBoard = "";
 
         //PrintStream outputBackup = System.out;
