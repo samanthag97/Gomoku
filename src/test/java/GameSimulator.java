@@ -84,4 +84,47 @@ public class GameSimulator {
         game.start();
     }
 
+
+    /*TESTS THAT SHOULD FAIL*/
+    @Test
+    public void gameWith6BlackInARow() { //should fail
+        String gameMoves = "1 2 3 3 1 3 4 4 1 4 5 5 1 6 6 6 1 7 7 8 1 5";
+
+        ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
+        System.setIn(fakeInput);
+
+        Game game = new Game();
+        game.start();
+    }
+
+    @Test
+    public void gameWith6BlackInColumn() { //should fail
+        String gameMoves = "1 2 3 3 2 2 4 4 3 2 5 5 6 2 6 6 5 2 7 8 4 2";
+
+        ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
+        System.setIn(fakeInput);
+
+        Game game = new Game();
+        game.start();
+    }
+
+    @Test
+    public void gameWith6BlackInDiagonal() { //should fail
+        String gameMoves = "1 1 6 8 2 2 5 8 4 4 5 6 5 5 9 9 6 6 7 9 3 3";
+        ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
+        System.setIn(fakeInput);
+
+        Game game = new Game();
+        game.start();
+    }
+
+    @Test
+    public void gameWith6BlackInOtherDiagonal() { //should fail
+        String gameMoves = "15 1 6 8 14 2 5 8 12 4 5 6 11 5 9 9 10 6 7 9 13 3";
+        ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
+        System.setIn(fakeInput);
+
+        Game game = new Game();
+        game.start();
+    }
 }

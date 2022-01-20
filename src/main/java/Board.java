@@ -79,9 +79,11 @@ public class Board {
         for (int column = 0; column < 15; column++) {
             if (board[row][column] == currentPlayer)
                 sameColor++;
-            else sameColor = 0;
-            if (sameColor == winning)
-                return true;
+            else {
+                if (sameColor == winning)
+                    return true;
+                sameColor = 0;
+            }
         }
         return false;
     }
@@ -92,9 +94,11 @@ public class Board {
         for (int row = 0; row < 15; row++) {
             if (board[row][column] == currentPlayer)
                 sameColor++;
-            else sameColor = 0;
-            if (sameColor == winning)
-                return true;
+            else {
+                if (sameColor == winning)
+                    return true;
+                sameColor = 0;
+            }
         }
         return false;
     }
@@ -115,9 +119,11 @@ public class Board {
         while (goOn) {
             if (board[i][j] == currentPlayer)
                 sameColor++;
-            else sameColor = 0;
-            if (sameColor == winning)
-                return true;
+            else {
+                if (sameColor == winning)
+                    return true;
+                sameColor = 0;
+            }
             i++;
             j++;
             if (j >= 15 || i >= 15)
@@ -125,10 +131,6 @@ public class Board {
         }
         return false;
     }
-
-    /*Approach: The key observation to solve the problem is that the two elements of the matrix
-    are on the same diagonal only if the sum of the indices or the absolute difference of the
-    indices of the elements are equal.*/
 
     public boolean sameColorInAcuteDiagonal(int row, int column) {
         //+1-1
@@ -146,12 +148,14 @@ public class Board {
         while (goOn) {
             if (board[i][j] == currentPlayer)
                 sameColor++;
-            else sameColor = 0;
-            if (sameColor == winning)
-                return true;
+            else {
+                if (sameColor == winning)
+                    return true;
+                sameColor = 0;
+            }
             i++;
             j--;
-            if (i >= 15|| j < 0)
+            if (i >= 15 || j < 0)
                 goOn = false;
         }
         return false;
