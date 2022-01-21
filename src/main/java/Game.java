@@ -15,7 +15,7 @@ class Game {
     public void start(){
         Board board = new Board();
         Scanner scanner = new Scanner(System.in);
-        scanner.useDelimiter("[,.; \\n]+"); //one or more commas, dots, semicolons, whitespaces and or enters
+        scanner.useDelimiter("[,.; \\n]+\\)\\("); //one or more commas, dots, semicolons, whitespaces, enters and or parenthesis
         System.out.println("Hi! This is a Gomoku game.");
         System.out.println("The first player to put five stones in a row wins!");
         System.out.println("This is the board:");

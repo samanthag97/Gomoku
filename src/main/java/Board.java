@@ -50,10 +50,10 @@ class Board {
 
     public void displayBoard() {
         System.out.println();
-        int[] colonne = new int[15];
+        int[] columns = new int[15];
         for (int i = 0; i < 15; i++) {
-            colonne[i] = i + 1;
-            System.out.printf("%3d", colonne[i]);
+            columns[i] = i + 1;
+            System.out.printf("%3d", columns[i]);
         }
 
         System.out.println();
@@ -73,13 +73,12 @@ class Board {
     } //for the test
 
     public boolean itsAWin(int row, int column) {
-        return sameColorInRow(row) || sameColorInColumn(column) ||
-                sameColorInGraveDiagonal(row, column) ||
-                sameColorInAcuteDiagonal(row, column);
+        return sameColorInRow(row, getCurrentPlayer()) || sameColorInColumn(column, getCurrentPlayer()) ||
+                sameColorInGraveDiagonal(row, column, getCurrentPlayer()) ||
+                sameColorInAcuteDiagonal(row, column, getCurrentPlayer());
     }
 
-    public boolean sameColorInRow(int row) {
-        char currentPlayer = getCurrentPlayer();
+    public boolean sameColorInRow(int row, char currentPlayer) {
         int sameColor = 0;
         for (int column = 0; column < 15; column++) {
             if (board[row][column] == currentPlayer)
@@ -93,8 +92,7 @@ class Board {
         return false;
     }
 
-    public boolean sameColorInColumn(int column) { //oppure trasposta e uso row?
-        char currentPlayer = getCurrentPlayer();
+    public boolean sameColorInColumn(int column, char currentPlayer) { //oppure trasposta e uso row?
         int sameColor = 0;
         for (int row = 0; row < 15; row++) {
             if (board[row][column] == currentPlayer)
@@ -108,9 +106,8 @@ class Board {
         return false;
     }
 
-    public boolean sameColorInGraveDiagonal(int row, int column) {
+    public boolean sameColorInGraveDiagonal(int row, int column, char currentPlayer) {
         //+1+1
-        char currentPlayer = getCurrentPlayer();
         int sameColor = 0;
         boolean goOn = true;
         int i, j;
@@ -137,9 +134,8 @@ class Board {
         return false;
     }
 
-    public boolean sameColorInAcuteDiagonal(int row, int column) {
+    public boolean sameColorInAcuteDiagonal(int row, int column, char currentPlayer) {
         //+1-1
-        char currentPlayer = getCurrentPlayer();
         int sameColor = 0;
         boolean goOn = true;
         int i, j;
