@@ -1,10 +1,10 @@
 import java.util.Scanner;
 
-public class Game {
+class Game {
 
     //maybe we put here the hasWon ecc.?
-    int i;
-    int j;
+    private int row;
+    private int column;
 
     public Game() {
         //maybe we put here the hasWon ecc.?
@@ -21,9 +21,9 @@ public class Game {
         while(!board.getHasWon()){ //until someone wins, it repeats
             board.printWhoIsNext();
             System.out.println("Enter your move (row and column): ");
-            i = scanner.nextInt();
-            j = scanner.nextInt();
-            board.putAStone(i,j);
+            row = scanner.nextInt();
+            column = scanner.nextInt();
+            board.putAStone(row,column);
         }
         scanner.close();
     }

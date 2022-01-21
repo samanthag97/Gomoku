@@ -1,9 +1,9 @@
-public class Board {
+class Board {
 
-    static char[][] board;
-    static boolean colorFlag; //true B, false W
-    static boolean hasWon;
-    static final int winning = 5;
+    private char[][] board;
+    private boolean colorFlag; //true B, false W
+    private boolean hasWon;
+    private static final int winning = 5;
 
     public Board() {
         this.initializeBoard();
@@ -43,7 +43,7 @@ public class Board {
         } else System.out.println("Error, this position is already taken, choose another one.");
     }
 
-    public static void displayBoard() {
+    public void displayBoard() {
         System.out.println();
         int[] colonne = new int[15];
         for (int i = 0; i < 15; i++) {
@@ -63,7 +63,7 @@ public class Board {
         System.out.println();
     }
 
-    public static char[] getRow(int rowNumber) {
+    public char[] getRow(int rowNumber) {
         return board[rowNumber];
     } //for the test
 
@@ -172,7 +172,7 @@ public class Board {
         }
     }
 
-    public static boolean getHasWon() {
+    public boolean getHasWon() {
         return hasWon;
     }
 

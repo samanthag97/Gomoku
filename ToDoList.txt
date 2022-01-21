@@ -7,24 +7,15 @@ dello stesso colore in fila (vert, oriz, obliq)
 
 TO DO LIST:
 
-- Display board: (array [15][15], inizialmente vuoto)    [sarebbe da fare una classe a parte per tenere le cose più in ordine]
-	  1 2 3 ... 15 (uso i + visto che le pedine 
-	1 + + + ... +   vanno messe nelle intersezioni)
-	2 + + + ... +
-	3 + + + ... +	[A][B] A=righe, B=colonne
-	...
-	15 + + + .. +
-	(in teoria vanno le lettere orizzontalmente ad indicare le colonne)
-	
+- Display board:  [sarebbe da fare una classe a parte per tenere le cose più in ordine]
+	- forse meglio mettere i numeri delle righe PRIMA
+
 - Player1/2 devono inserire le coordinate del posto in cui
    inseriranno la pedina:
 	-verificare che le coordinate siano valide
-	 (all'interno della board, spazio non occupato, ...)
+	 (se metto una lettera -> ERRORE)
 	-controllare eventuali vittorie*
 	
-- Display pedine sulla board:
-	-nero e bianco, scegliere i simboli (es O,X)
-
 *CONTROLLARE EVENTUALI VITTORIE: (parte più complessa)
 	-5 in verticale: B resta fisso e vedo se ci sono (basta fare la trasposta e usare i metodi per le righe)
 					 5 pedine dello stesso colore di fila 
