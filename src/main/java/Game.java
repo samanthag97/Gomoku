@@ -1,16 +1,18 @@
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 class Game {
 
     //maybe we put here the hasWon ecc.?
     private int row;
     private int column;
+	private static final char exitGame = 'x';
 
     public Game() {
         //maybe we put here the hasWon ecc.?
     }
 
-    public void start() {
+    public void start(){
         Board board = new Board();
         Scanner scanner = new Scanner(System.in);
         scanner.useDelimiter("[,.; \\n]+"); //one or more commas, dots, semicolons, whitespaces and or enters
@@ -20,9 +22,17 @@ class Game {
         board.displayBoard();
         while(!board.getHasWon()){ //until someone wins, it repeats
             board.printWhoIsNext();
-            System.out.println("Enter your move (row and column): ");
-            row = scanner.nextInt();
-            column = scanner.nextInt();
+            System.out.println("Enter your move (row and column): \t[or digit 0 to exit the game.]");
+			try{
+				row = scanner.nextInt();
+				if(row == 0)
+					break;
+				column = scanner.nextInt();
+				
+			} catch (InputMismatchException error){
+				System.out.println("An error happened: " + "No characters allowed.");
+				scanner.next();
+			}
             board.putAStone(row,column);
         }
         scanner.close();

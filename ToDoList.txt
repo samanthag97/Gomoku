@@ -45,3 +45,6 @@ se ho esattamente 5 vinco, se sono di più no
 - test che controllano automaticamente il vincitore/la situazione finale
 - usare costrutti di java più avanzati? (iterators ecc.?)
 - ???
+- dividere classe board (o usare interface) e classe winning
+
+
