@@ -26,14 +26,15 @@ class Game {
 			try{
 				row = scanner.nextInt();
 				if(row == 0)
-					break;
+					break;				
 				column = scanner.nextInt();
-				
-			} catch (InputMismatchException error){
+				board.putAStone(row,column);				
+			} 
+			catch (InputMismatchException error){
 				System.out.println("An error happened: " + "No characters allowed.");
 				scanner.next();
 			}
-            board.putAStone(row,column);
+            		
         }
         scanner.close();
     }

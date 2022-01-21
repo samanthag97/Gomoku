@@ -1,10 +1,10 @@
 class Board {
-
+	
     private char[][] board;
     private boolean colorFlag; //true B, false W
     private boolean hasWon;
     private static final int winning = 5;
-
+	
     public Board() {
         this.initializeBoard();
         colorFlag = true; //black (B) starts
@@ -23,24 +23,29 @@ class Board {
         if (colorFlag == true) return 'B';
         else return 'W';
     }
+	
+	public boolean checkPosition(int row, int column){
+		boolean error = false;
+		if (row > 15 || column > 15 || row < 1 || column < 1 ||(board[row-1][column-1] != '+')) 
+			error = true;
+		//if) //already taken
+			//error = true;			
+		return error;
+	}
 
-    public void putAStone(int i, int j) {
-        if (i > 15 || j > 15 || i < 1 || j < 1) //out of board
-            System.out.println("Invalid input. Please digit a valid one.");
-
-        else if (board[i - 1][j - 1] == '+') { //position not taken yet
-            //OR SHOULD WE USE EXCEPTION??
-            board[i - 1][j - 1] = getCurrentPlayer(); //we have coordinates from 1, but in the array it's from 0, so we do -1
-
-            displayBoard(); //after adding a stone i display the board...
-
-            if (itsAWin(i - 1, j - 1)) { //...and then check if that palyer won
+    public void putAStone(int row, int column) {
+		if(checkPosition(row, column))
+			System.out.println("Invalid input. Please digit a valid one.");
+        else { 
+            board[row - 1][column - 1] = getCurrentPlayer(); //we have coordinates from 1, but in the array it's from 0, so we do -1
+            displayBoard(); 
+            if (itsAWin(row - 1, column - 1)) { 
                 hasWon = true;
                 System.out.println("\tWIN!!");
                 System.out.println("\t" + getCurrentPlayer() + " wins!");
-            } else colorFlag = !colorFlag; //otherwise keep playing: changes color --> next player's turn
+            } else colorFlag = !colorFlag; //next player's turn
 
-        } else System.out.println("Error, this position is already taken, choose another one.");
+        } 
     }
 
     public void displayBoard() {
