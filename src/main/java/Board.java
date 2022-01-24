@@ -2,8 +2,10 @@ class Board {
 	
     private char[][] board;
     private boolean colorFlag; //true B, false W
-    private boolean hasWon;
+    private boolean hasWon = false;
     private static final int winning = 5;
+	private int counter = 1;
+	private boolean five = false;
 	
     public Board() {
         this.initializeBoard();
@@ -73,12 +75,45 @@ class Board {
     } //for the test
 
     public boolean itsAWin(int row, int column) {
-        return sameColorInRow(row) || sameColorInColumn(column) ||
-                sameColorInGraveDiagonal(row, column) ||
-                sameColorInAcuteDiagonal(row, column);
+		return checkAfter(row, column, board) || checkBelow(row, column);
+        //return sameColorInRow(row) || sameColorInColumn(column) ||
+          //      sameColorInGraveDiagonal(row, column) ||
+            //    sameColorInAcuteDiagonal(row, column);
     }
+	
+	
+	public boolean checkAfter(int i, int j, char[][] b){ //EST			
+		if(j>=14)
+			return five;
+		else if(b[i][j] == b[i][j+1]){ 
+			counter += 1;
+			if(counter == 4)
+				five = true;
+			else{
+				++j;			
+				checkAfter(i, j, b);
+			}
+		}		
+		return five;
+	}
+	
+	public boolean checkBelow(int thisR, int thisC){ //SUD
+		char[][] t = trasposta(board);
+		return checkAfter(thisC, thisR, t);
+	}
+	
+	public static char[][] trasposta(char[][] board){
+		char[][] t = new char[15][15];
+		for(int i=0; i<15; i++){
+			for(int j=0; j<15; j++)
+				t[i][j] = board[j][i];
+		}
+		return t;		
+	}
+	
+	
 
-    public boolean sameColorInRow(int row) {
+    /*public boolean sameColorInRow(int row) {
         char currentPlayer = getCurrentPlayer();
         int sameColor = 0;
         for (int column = 0; column < 15; column++) {
@@ -106,7 +141,7 @@ class Board {
             }
         }
         return false;
-    }
+    }*/
 
     public boolean sameColorInGraveDiagonal(int row, int column) {
         //+1+1
