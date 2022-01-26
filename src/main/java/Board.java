@@ -73,81 +73,29 @@ class Board {
     } //for the test
 
     public boolean itsAWin(int row, int column) {
-        return sameColorInRow(row, getCurrentPlayer()) || sameColorInColumn(column, getCurrentPlayer()) ||
-                sameColorInGraveDiagonal(row, column, getCurrentPlayer()) ||
-                sameColorInAcuteDiagonal(row, column, getCurrentPlayer());
+        return fiveCounted(row, column, 0, 1, getCurrentPlayer()) || //in row
+                fiveCounted(row, column, 1, 0, getCurrentPlayer()) || //in column
+                fiveCounted(row, column, 1, 1, getCurrentPlayer()) || //in diagonal up-down
+                fiveCounted(row, column, 1, -1, getCurrentPlayer()); //in diagonal down-up
     }
 
-    public boolean sameColorInRow(int row, char currentPlayer) {
-        int sameColor = 0;
-        for (int column = 0; column < 15; column++) {
-            if (board[row][column] == currentPlayer)
-                sameColor++;
-            else {
-                if (sameColor == winning)
-                    return true;
-                sameColor = 0;
-            }
-        }
-        return false;
-    }
-
-    public boolean sameColorInColumn(int column, char currentPlayer) { //oppure trasposta e uso row?
-        int sameColor = 0;
-        for (int row = 0; row < 15; row++) {
-            if (board[row][column] == currentPlayer)
-                sameColor++;
-            else {
-                if (sameColor == winning)
-                    return true;
-                sameColor = 0;
-            }
-        }
-        return false;
-    }
-
-    public boolean sameColorInGraveDiagonal(int r, int c, char player) {
-        //+1+1
-
+    public boolean fiveCounted(int r, int c, int rDirection, int cDirection, char player) {
         int count = 1;
-        int row = r - 1;
-        int col = c - 1;
-        while ((row >= 0) && (col >= 0) &&
+        int row = r + rDirection;
+        int col = c + cDirection;
+        while ((row >= 0) && (col >= 0) && (row < 15) && (col < 15) &&
                 (board[row][col] == player)) {
             count += 1;
-            row--;
-            col--;
+            row = row + rDirection;
+            col = col + cDirection;
         }
-        row = r + 1;
-        col = c + 1;
-        while ((row < 15) && (col < 15) &&
+        row = r - rDirection;
+        col = c - cDirection;
+        while ((row < 15) && (col < 15) && (row >= 0) && (col >= 0) &&
                 (board[row][col] == player)) {
             count += 1;
-            row++;
-            col++;
-        }
-        return count == winning;
-    }
-
-    public boolean sameColorInAcuteDiagonal(int r, int c, char player) {
-        //+1-1
-
-        int count = 1;
-        int row = r - 1;
-        int col = c + 1;
-        while ((row >= 0) && (col < 15) &&
-                (board[row][col] == player)) {
-            count += 1;
-            row--;
-            col++;
-        }
-        row = r + 1;
-        col = c - 1;
-        while ((row < 15) && (col >= 0) &&
-                (board[row][col] == player)) {
-            count += 1;
-            row++;
-            col--;
+            row = row - rDirection;
+            col = col - cDirection;
         }
         return count == winning;
     }
