@@ -75,20 +75,13 @@ class Board {
     } //for the test
 
     public boolean itsAWin(int row, int column) {
-<<<<<<< HEAD
-		return checkAfter(row, column, board) || checkBelow(row, column);
-        //return sameColorInRow(row) || sameColorInColumn(column) ||
-          //      sameColorInGraveDiagonal(row, column) ||
-            //    sameColorInAcuteDiagonal(row, column);
-=======
         return sameColorInRow(row, getCurrentPlayer()) || sameColorInColumn(column, getCurrentPlayer()) ||
                 sameColorInGraveDiagonal(row, column, getCurrentPlayer()) ||
                 sameColorInAcuteDiagonal(row, column, getCurrentPlayer());
->>>>>>> 907160713606aa6ae55cbad92145680d6cdcfb10
     }
 	
 	
-	public boolean checkAfter(int i, int j, char[][] b){ //EST			
+	/*public boolean checkAfter(int i, int j, char[][] b){ //EST			
 		if(j>=14)
 			return five;
 		else if(b[i][j] == b[i][j+1]){ 
@@ -115,16 +108,16 @@ class Board {
 				t[i][j] = board[j][i];
 		}
 		return t;		
-	}
+	}*/
 	
 	
 
-<<<<<<< HEAD
+
     /*public boolean sameColorInRow(int row) {
         char currentPlayer = getCurrentPlayer();
-=======
+	}*/
+
     public boolean sameColorInRow(int row, char currentPlayer) {
->>>>>>> 907160713606aa6ae55cbad92145680d6cdcfb10
         int sameColor = 0;
         for (int column = 0; column < 15; column++) {
             if (board[row][column] == currentPlayer)
@@ -150,7 +143,7 @@ class Board {
             }
         }
         return false;
-    }*/
+    }
 
     public boolean sameColorInGraveDiagonal(int row, int column, char currentPlayer) {
         //+1+1
