@@ -42,7 +42,7 @@ public class GameSimulator {
 
     @Test
     public void gameWithBlackDiagonalWinnerUp() {
-        String gameMoves = "1 2 4 6 2 3 6 8 5 6 9 10 4 5 13 6 3 4";
+        String gameMoves = "1 2 4 6 2 3 6 8 5 6 9 10 4 5 13 6 7 8 1 15 3 4";
 
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);

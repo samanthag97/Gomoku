@@ -1,10 +1,10 @@
 class Board {
-	
+
     private char[][] board;
     private boolean colorFlag; //true B, false W
     private boolean hasWon;
     private static final int winning = 5;
-	
+
     public Board() {
         this.initializeBoard();
         colorFlag = true; //black (B) starts
@@ -23,29 +23,29 @@ class Board {
         if (colorFlag == true) return 'B';
         else return 'W';
     }
-	
-	public boolean checkPosition(int row, int column){
-		boolean error = false;
-		if (row > 15 || column > 15 || row < 1 || column < 1 ||(board[row-1][column-1] != '+')) 
-			error = true;
-		//if) //already taken
-			//error = true;			
-		return error;
-	}
+
+    public boolean checkPosition(int row, int column) {
+        boolean error = false;
+        if (row > 15 || column > 15 || row < 1 || column < 1 || (board[row - 1][column - 1] != '+'))
+            error = true;
+        //if) //already taken
+        //error = true;
+        return error;
+    }
 
     public void putAStone(int row, int column) {
-		if(checkPosition(row, column))
-			System.out.println("Invalid input. Please digit a valid one.");
-        else { 
+        if (checkPosition(row, column))
+            System.out.println("Invalid input. Please digit a valid one.");
+        else {
             board[row - 1][column - 1] = getCurrentPlayer(); //we have coordinates from 1, but in the array it's from 0, so we do -1
-            displayBoard(); 
-            if (itsAWin(row - 1, column - 1)) { 
+            displayBoard();
+            if (itsAWin(row - 1, column - 1)) {
                 hasWon = true;
                 System.out.println("\tWIN!!");
                 System.out.println("\t" + getCurrentPlayer() + " wins!");
             } else colorFlag = !colorFlag; //next player's turn
 
-        } 
+        }
     }
 
     public void displayBoard() {
@@ -106,60 +106,50 @@ class Board {
         return false;
     }
 
-    public boolean sameColorInGraveDiagonal(int row, int column, char currentPlayer) {
+    public boolean sameColorInGraveDiagonal(int r, int c, char player) {
         //+1+1
-        int sameColor = 0;
-        boolean goOn = true;
-        int i, j;
-        if (row <= column) {    //sopra alla diagonale principale
-            i = 0;
-            j = Math.abs(row - column);
-        } else {    //sotto alla diagonale principale
-            j = 0;
-            i = Math.abs(row - column);
+
+        int count = 1;
+        int row = r - 1;
+        int col = c - 1;
+        while ((row >= 0) && (col >= 0) &&
+                (board[row][col] == player)) {
+            count += 1;
+            row--;
+            col--;
         }
-        while (goOn) {
-            if (board[i][j] == currentPlayer)
-                sameColor++;
-            else {
-                if (sameColor == winning)
-                    return true;
-                sameColor = 0;
-            }
-            i++;
-            j++;
-            if (j >= 15 || i >= 15)
-                goOn = false;
+        row = r + 1;
+        col = c + 1;
+        while ((row < 15) && (col < 15) &&
+                (board[row][col] == player)) {
+            count += 1;
+            row++;
+            col++;
         }
-        return false;
+        return count == winning;
     }
 
-    public boolean sameColorInAcuteDiagonal(int row, int column, char currentPlayer) {
+    public boolean sameColorInAcuteDiagonal(int r, int c, char player) {
         //+1-1
-        int sameColor = 0;
-        boolean goOn = true;
-        int i, j;
-        if (row + column <= 14) {   //sopra alla diagonale principale
-            i = 0;
-            j = row + column;
-        } else {    //sotto alla diagonale principale
-            i = row + column - 14;
-            j = 14;
+
+        int count = 1;
+        int row = r - 1;
+        int col = c + 1;
+        while ((row >= 0) && (col < 15) &&
+                (board[row][col] == player)) {
+            count += 1;
+            row--;
+            col++;
         }
-        while (goOn) {
-            if (board[i][j] == currentPlayer)
-                sameColor++;
-            else {
-                if (sameColor == winning)
-                    return true;
-                sameColor = 0;
-            }
-            i++;
-            j--;
-            if (i >= 15 || j < 0)
-                goOn = false;
+        row = r + 1;
+        col = c - 1;
+        while ((row < 15) && (col >= 0) &&
+                (board[row][col] == player)) {
+            count += 1;
+            row++;
+            col--;
         }
-        return false;
+        return count == winning;
     }
 
 
