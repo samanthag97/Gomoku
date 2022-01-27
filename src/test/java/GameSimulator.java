@@ -1,20 +1,22 @@
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.NoSuchElementException;
 
 public class GameSimulator {
 
     //can do a single test that takes all the games one after the other
 
     /*Wins*/
-
     @Test
     public void gameWithBlackRowWinner() {
-        String gameMoves = "1 2 3 3 1 4 4 4 1 3 5 5 1 5 6 6 1 6 7 7";
+        String gameMoves = "1\n 2\n 3\n 3\n 1\n 4\n 4\n 4 \n1 \n3\n 5\n 5\n 1\n 5\n 6\n 6\n 1\n 6\n 7\n 7\n";
         String expectedFinalBoard = "";
 
         //PrintStream outputBackup = System.out;
@@ -31,10 +33,9 @@ public class GameSimulator {
 
         //assertEquals(expectedFinalBoard, fakeOutput.toString()); //to try and test the result
     }
-
     @Test
     public void gameWithWhiteColumnWinner() {
-        String gameMoves = "1 2 3 3 1 4 4 3 1 3 2 3 1 8 5 3 6 6 6 3";
+        String gameMoves = "1\n 2\n 3\n 3 \n1 \n4\n 4\n 3\n 1\n 3\n 2\n 3\n 1\n 8\n 5\n 3\n 6\n 6\n 6\n 3\n";
 
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
@@ -42,10 +43,9 @@ public class GameSimulator {
         Game game = new Game(new Board());
         game.start();
     }
-
     @Test
     public void gameWithBlackDiagonalWinnerUp() {
-        String gameMoves = "1 2 4 6 2 3 6 8 5 6 9 10 4 5 13 6 7 8 1 15 3 4";
+        String gameMoves = "1 \n2\n 4\n 6\n 2\n 3\n 6\n 8\n 5\n 6\n 9\n 10\n 4\n 5\n 13\n 6\n 7\n 8\n 1\n 15\n 3\n 4\n";
 
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
@@ -53,10 +53,9 @@ public class GameSimulator {
         Game game = new Game(new Board());
         game.start();
     }
-
     @Test
     public void gameWithBlackDiagonalWinnerDown() {
-        String gameMoves = "2 1 4 6 3 2 6 8 6 5 9 10 5 4 13 6 4 3";
+        String gameMoves = "2 \n1 \n4 \n6 \n3 \n2 \n6 \n8 \n6 \n5 \n9 \n10\n 5\n 4\n 13\n 6 \n4 \n3\n";
 
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
@@ -64,10 +63,9 @@ public class GameSimulator {
         Game game = new Game(new Board());
         game.start();
     }
-
     @Test
     public void gameWithWhiteDiagonalWinnerUp() {
-        String gameMoves = "4 6 2 12 6 7 4 10 9 10 3 11 13 6 5 9 1 1 6 8";
+        String gameMoves = "4\n 6\n 2 \n12\n 6\n 7\n 4\n 10 \n9\n 10\n 3\n 11\n 13\n 6\n 5\n 9\n 1\n 1\n 6\n 8\n";
 
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
@@ -75,10 +73,9 @@ public class GameSimulator {
         Game game = new Game(new Board());
         game.start();
     }
-
     @Test
     public void gameWithWhiteDiagonalWinnerDown() {
-        String gameMoves = "4 6 5 12 6 8 7 10 9 10 6 11 13 6 8 9 1 1 9 8";
+        String gameMoves = "4\n 6\n 5\n 12\n 6\n 8\n 7\n 10\n 9 \n10\n 6\n 11\n 13\n 6\n 8\n 9\n 1 \n1\n9\n 8\n";
 
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
@@ -91,57 +88,76 @@ public class GameSimulator {
     /*Draw*/
     @Test
     public void drawTest() {
-        Board board = new Board();
+        StringBuilder sb = new StringBuilder();
         for (int row = 1; row <= 15; row++) {
-            for (int column = 1; column <= 15; column++) {
-                board.putAStone(row, column);
+            for (int column = 1; column <= 15; column = column + 2) {
+                sb.append(row + "\n" + column + "\n");
+            }
+            for (int column = 2; column <= 15; column = column + 2) {
+                sb.append(row + "\n" + column + "\n");
             }
         }
-        Game game = new Game(board);
+        String gameMoves = sb.toString();
+
+        ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
+        System.setIn(fakeInput);
+
+        Game game = new Game(new Board());
         game.start();
     }
 
 
-    /*TESTS THAT SHOULD FAIL*/
+    /*Six instead of five doesn't win*/
     @Test
     public void gameWith6BlackInARow() { //should fail
-        String gameMoves = "1 2 3 3 1 3 4 4 1 4 5 5 1 6 6 6 1 7 7 8 1 5";
+        Exception exception = Assertions.assertThrows(NoSuchElementException.class, () -> {
+            String gameMoves = "1\n 2\n 3\n 3 \n1 \n3\n 4\n 4 \n1\n 4\n 5\n 5\n 1\n 6 \n6\n 6\n 1\n 7\n 7\n 8\n 1\n 5\n";
 
-        ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
-        System.setIn(fakeInput);
+            ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
+            System.setIn(fakeInput);
 
-        Game game = new Game(new Board());
-        game.start();
+            Game game = new Game(new Board());
+            game.start();
+        });
+        Assertions.assertEquals("No line found", exception.getMessage());
     }
-
     @Test
     public void gameWith6BlackInColumn() { //should fail
-        String gameMoves = "1 2 3 3 2 2 4 4 3 2 5 5 6 2 6 6 5 2 7 8 4 2";
+        Exception exception = Assertions.assertThrows(NoSuchElementException.class, () -> {
+            String gameMoves = "1\n 2\n 3\n 3\n 2\n 2 \n4\n 4 \n3 \n2 \n5\n 5\n 6\n 2\n 6\n 6\n 5\n 2\n 7\n 8\n 4\n 2\n";
 
-        ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
-        System.setIn(fakeInput);
+            ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
+            System.setIn(fakeInput);
 
-        Game game = new Game(new Board());
-        game.start();
+            Game game = new Game(new Board());
+            game.start();
+        });
+        Assertions.assertEquals("No line found", exception.getMessage());
     }
-
     @Test
     public void gameWith6BlackInDiagonal() { //should fail
-        String gameMoves = "1 1 6 8 2 2 5 8 4 4 5 6 5 5 9 9 6 6 7 9 3 3";
-        ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
-        System.setIn(fakeInput);
+        Exception exception = Assertions.assertThrows(NoSuchElementException.class, () -> {
+            String gameMoves = "1\n 1\n 6\n 8\n 2\n 2 \n5\n 8\n 4\n 4\n 5\n 6 \n5 \n5 \n9 \n9\n 6\n 6\n 7\n 9\n 3\n 3\n";
 
-        Game game = new Game(new Board());
-        game.start();
+            ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
+            System.setIn(fakeInput);
+
+            Game game = new Game(new Board());
+            game.start();
+        });
+        Assertions.assertEquals("No line found", exception.getMessage());
     }
-
     @Test
     public void gameWith6BlackInOtherDiagonal() { //should fail
-        String gameMoves = "15 1 6 8 14 2 5 8 12 4 5 6 11 5 9 9 10 6 7 9 13 3";
-        ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
-        System.setIn(fakeInput);
+        Exception exception = Assertions.assertThrows(NoSuchElementException.class, () -> {
+            String gameMoves = "15\n 1\n 6\n 8\n 14 \n2 \n5\n 8\n 12\n 4\n 5\n 6\n 11\n 5\n 9\n 9\n 10\n 6\n 7\n 9\n 13\n 3\n";
 
-        Game game = new Game(new Board());
-        game.start();
+            ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
+            System.setIn(fakeInput);
+
+            Game game = new Game(new Board());
+            game.start();
+        });
+        Assertions.assertEquals("No line found", exception.getMessage());
     }
 }
