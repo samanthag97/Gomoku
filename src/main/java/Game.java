@@ -8,7 +8,7 @@ class Game {
     private int row;
     private int column;
     private static final char exitGame = 'x';
-
+	
     public Game() {
         //maybe we put here the hasWon ecc.?
     }
@@ -16,7 +16,7 @@ class Game {
     public void start() {
         Board board = new Board();
         Scanner scanner = new Scanner(System.in);
-        //scanner.useDelimiter("[\\p{Punct}\\p{javaWhitespace}]+"); //any punctuation characters or whitespaces allowed
+        //scanner.useDelimiter("[\\p{Punct}\\p{javaWhitespace}]+"); //any punctuation characters or whitespaces allowed		
         System.out.println("Hi! This is a Gomoku game.");
         System.out.println("The first player to put five stones in a row wins!");
         System.out.println("This is the board:");
@@ -28,25 +28,28 @@ class Game {
 			}
 			else{
 				board.printWhoIsNext();
-				System.out.println("Enter your move (row and column): \t[or digit x to exit the game.]");
+				System.out.println("Enter your move: \t[or digit x to exit the game.]");
+				System.out.print("Row: ");
+				String r = scanner.nextLine().trim(); //elimino eventuali spazi all'inio e alla fine
+				//r.trim();
+				if (r.equalsIgnoreCase("x"))
+					break;
+				System.out.print("Column: ");
+				String c = scanner.nextLine().trim(); 
+				System.out.println(r + " " + c);				
 				
-				try {
-					String r = scanner.next();
-					if (r.equalsIgnoreCase("x"))
-						break;
-					String c = scanner.next();		
-			
+				try{						
 					row = Integer.valueOf(r);
 					column = Integer.valueOf(c);					
 					board.putAStone(row, column);
-				} catch (NumberFormatException error) {
+				}
+				catch (NumberFormatException error){
 					System.out.println("Sorry, only integer numbers are allowed.");
 					//scanner.next();
 				}
-			}
-        }
+			}			
+		}
         scanner.close();
-		
     }
 
 }
