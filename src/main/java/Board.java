@@ -4,13 +4,11 @@ class Board {
     private boolean colorFlag; //true B, false W
     private boolean hasWon = false;
     private static final int winning = 5;
-<<<<<<< HEAD
+	private static final int boardSize = 15;
+
 	private int counter = 1;
 	private boolean five = false;
 	
-=======
-
->>>>>>> 88f5acd9994252cd6b7e88f2e29a15acaad44478
     public Board() {
         this.initializeBoard();
         colorFlag = true; //black (B) starts
@@ -18,12 +16,22 @@ class Board {
     }
 
     public void initializeBoard() {
-        board = new char[15][15];
-        for (int i = 0; i < 15; i++) {
-            for (int j = 0; j < 15; j++)
+        board = new char[boardSize][boardSize];
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++)
                 board[i][j] = '+';
         }
     }
+	
+	public boolean isFull(){
+		for(int row=0; row<boardSize; row++){
+			for(int column=0; column<boardSize; column++){
+				if(board[row][column]=='+') //almeno una casella è libera
+					return false;
+			}
+		}
+		return true;			
+	}
 
     public char getCurrentPlayer() {
         if (colorFlag == true) return 'B';
@@ -32,40 +40,37 @@ class Board {
 
     public boolean checkPosition(int row, int column) {
         boolean error = false;
-        if (row > 15 || column > 15 || row < 1 || column < 1 || (board[row - 1][column - 1] != '+'))
+        if (row > boardSize || column > boardSize || row < 1 || column < 1 || (board[row - 1][column - 1] != '+'))
             error = true;
-        //if) //already taken
-        //error = true;
         return error;
     }
 
     public void putAStone(int row, int column) {
         if (checkPosition(row, column))
             System.out.println("Invalid input. Please digit a valid one.");
-        else {
+		
+        else {				
             board[row - 1][column - 1] = getCurrentPlayer(); //we have coordinates from 1, but in the array it's from 0, so we do -1
             displayBoard();
             if (itsAWin(row - 1, column - 1)) {
                 hasWon = true;
-                System.out.println("\tWIN!!");
-                System.out.println("\t" + getCurrentPlayer() + " wins!");
+                System.out.println("\t" + getCurrentPlayer() + " wins!\n");
             } else colorFlag = !colorFlag; //next player's turn
-
         }
     }
 
     public void displayBoard() {
         System.out.println();
-        int[] columns = new int[15];
-        for (int i = 0; i < 15; i++) {
+        int[] columns = new int[boardSize];
+        for (int i = 0; i < boardSize; i++) {
             columns[i] = i + 1;
             System.out.printf("%3d", columns[i]);
         }
 
         System.out.println();
         System.out.println();
-        for (int i = 0; i < 15; i++) {
-            for (int j = 0; j < 15; j++) {
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
                 String board2 = "  " + board[i][j];
                 System.out.print(board2);
             }
@@ -84,49 +89,12 @@ class Board {
                 fiveCounted(row, column, 1, 1, getCurrentPlayer()) || //in diagonal up-down
                 fiveCounted(row, column, 1, -1, getCurrentPlayer()); //in diagonal down-up
     }
-	
-	
-	/*public boolean checkAfter(int i, int j, char[][] b){ //EST			
-		if(j>=14)
-			return five;
-		else if(b[i][j] == b[i][j+1]){ 
-			counter += 1;
-			if(counter == 4)
-				five = true;
-			else{
-				++j;			
-				checkAfter(i, j, b);
-			}
-		}		
-		return five;
-	}
-	
-	public boolean checkBelow(int thisR, int thisC){ //SUD
-		char[][] t = trasposta(board);
-		return checkAfter(thisC, thisR, t);
-	}
-	
-	public static char[][] trasposta(char[][] board){
-		char[][] t = new char[15][15];
-		for(int i=0; i<15; i++){
-			for(int j=0; j<15; j++)
-				t[i][j] = board[j][i];
-		}
-		return t;		
-	}*/
-	
-	
-
-
-    /*public boolean sameColorInRow(int row) {
-        char currentPlayer = getCurrentPlayer();
-	}*/
 
     public boolean fiveCounted(int r, int c, int rDirection, int cDirection, char player) {
         int count = 1;
         int row = r + rDirection;
         int col = c + cDirection;
-        while ((row >= 0) && (col >= 0) && (row < 15) && (col < 15) &&
+        while ((row >= 0) && (col >= 0) && (row < boardSize) && (col < boardSize) &&
                 (board[row][col] == player)) {
             count += 1;
             row = row + rDirection;
@@ -134,7 +102,7 @@ class Board {
         }
         row = r - rDirection;
         col = c - cDirection;
-        while ((row < 15) && (col < 15) && (row >= 0) && (col >= 0) &&
+        while ((row < boardSize) && (col < boardSize) && (row >= 0) && (col >= 0) &&
                 (board[row][col] == player)) {
             count += 1;
             row = row - rDirection;
@@ -157,15 +125,5 @@ class Board {
     public boolean getHasWon() {
         return hasWon;
     }
-
-
-    //colonne: basta fare la trasposta e usare i metodi per le righe
-    //diagonale:
-	/*
-	cerco il primo elemento B/W	in tutte le righe (vedi sopra). Quando trovo il primo
-	(vuol dire che nelle righe prima non c'era), controllo a dx (5inRow), sotto (5inColumn)
-	e poi controllo sotto a dx (board[i+1][i+1])
-	*/
-
 
 }

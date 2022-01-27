@@ -20,22 +20,28 @@ class Game {
         System.out.println("The first player to put five stones in a row wins!");
         System.out.println("This is the board:");
         board.displayBoard();
-        while (!board.getHasWon()) { //until someone wins, it repeats
-            board.printWhoIsNext();
-            System.out.println("Enter your move (row and column): \t[or digit 0 to exit the game.]");
-            try {
-                row = scanner.nextInt();
-                if (row == 0)
-                    break;
-                column = scanner.nextInt();
-                board.putAStone(row, column);
-            } catch (InputMismatchException error) {
-                System.out.println("An error happened: " + "No characters allowed.");
-                scanner.next();
-            }
-
+        while (!board.getHasWon()){ //until someone wins, it repeats
+			if(board.isFull()){
+				System.out.println("\tboard is full, game over!\n");
+				break;
+			}
+			else{
+				board.printWhoIsNext();
+				System.out.println("Enter your move (row and column): \t[or digit 0 to exit the game.]");
+				try {
+					row = scanner.nextInt();
+					if (row == 0)
+						break;
+					column = scanner.nextInt();
+					board.putAStone(row, column);
+				} catch (InputMismatchException error) {
+					System.out.println("An error happened: " + "No characters allowed.");
+					scanner.next();
+				}
+			}
         }
         scanner.close();
+		
     }
 
 }
