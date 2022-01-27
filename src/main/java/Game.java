@@ -4,14 +4,7 @@ import java.lang.NumberFormatException;
 
 class Game {
 
-    //maybe we put here the hasWon ecc.?
-    private int row;
-    private int column;
-    private static final char exitGame = 'x';
-	
-    public Game() {
-        //maybe we put here the hasWon ecc.?
-    }
+    private static final String exitGame = "x";
 
     public void start() {
         Board board = new Board();
@@ -21,34 +14,31 @@ class Game {
         System.out.println("The first player to put five stones in a row wins!");
         System.out.println("This is the board:");
         board.displayBoard();
-        while (!board.getHasWon()){ //until someone wins, it repeats
-			if(board.isFull()){
-				System.out.println("\tboard is full, game over!\n");
-				break;
-			}
-			else{
-				board.printWhoIsNext();
-				System.out.println("Enter your move: \t[or digit x to exit the game.]");
-				System.out.print("Row: ");
-				String r = scanner.nextLine().trim(); //elimino eventuali spazi all'inio e alla fine
-				//r.trim();
-				if (r.equalsIgnoreCase("x"))
-					break;
-				System.out.print("Column: ");
-				String c = scanner.nextLine().trim(); 
-				System.out.println(r + " " + c);				
-				
-				try{						
-					row = Integer.valueOf(r);
-					column = Integer.valueOf(c);					
-					board.putAStone(row, column);
-				}
-				catch (NumberFormatException error){
-					System.out.println("Sorry, only integer numbers are allowed.");
-					//scanner.next();
-				}
-			}			
-		}
+        int row;
+        int column;
+        while (!board.gameOver) { //until someone wins, it repeats
+            board.printWhoIsNext();
+            System.out.println("Enter your move: \t[or digit x to exit the game.]");
+            System.out.print("Row: ");
+            String r = scanner.nextLine().trim(); //elimino eventuali spazi all'inio e alla fine
+            //r.trim();
+            System.out.print("Column: ");
+            String c = scanner.nextLine().trim();
+            if (r.equalsIgnoreCase(exitGame) || c.equalsIgnoreCase(exitGame)) {
+                System.out.println("Closing the game, bye!");
+                break;
+            }
+            System.out.println(r + ", " + c);
+
+            try {
+                row = Integer.valueOf(r);
+                column = Integer.valueOf(c);
+                board.putAStone(row, column);
+            } catch (NumberFormatException error) {
+                System.out.println("Sorry, only integer numbers are allowed.");
+                //scanner.next();
+            }
+        }
         scanner.close();
     }
 

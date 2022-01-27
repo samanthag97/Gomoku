@@ -2,17 +2,16 @@ class Board {
 
     private char[][] board;
     private boolean colorFlag; //true B, false W
-    private boolean hasWon = false;
+    public boolean gameOver;
+    private int numberOfMoves;
     private static final int winning = 5;
-	private static final int boardSize = 15;
+    private static final int boardSize = 15;
 
-	private int counter = 1;
-	private boolean five = false;
-	
     public Board() {
         this.initializeBoard();
         colorFlag = true; //black (B) starts
-        hasWon = false;
+        gameOver = false;
+        numberOfMoves = 0;
     }
 
     public void initializeBoard() {
@@ -22,16 +21,6 @@ class Board {
                 board[i][j] = '+';
         }
     }
-	
-	public boolean isFull(){
-		for(int row=0; row<boardSize; row++){
-			for(int column=0; column<boardSize; column++){
-				if(board[row][column]=='+') //almeno una casella è libera
-					return false;
-			}
-		}
-		return true;			
-	}
 
     public char getCurrentPlayer() {
         if (colorFlag == true) return 'B';
@@ -40,26 +29,29 @@ class Board {
 
     public boolean checkPosition(int row, int column) {
         boolean error = false;
-        if (row > boardSize || column > boardSize || row < 1 || column < 1){
+        if (row > boardSize || column > boardSize || row < 1 || column < 1) {
             error = true;
-			System.out.print("This position is outside the board. ");
-		}
-		else if(board[row - 1][column - 1] != '+'){
-			error = true;
-			System.out.print("This position is already taken. ");
-		}
+            System.out.print("This position is outside the board. ");
+        } else if (board[row - 1][column - 1] != '+') {
+            error = true;
+            System.out.print("This position is already taken. ");
+        }
         return error;
     }
 
     public void putAStone(int row, int column) {
         if (checkPosition(row, column))
-            System.out.println("Please digit a valid input.");		
-        else {				
+            System.out.println("Please digit a valid input.");
+        else {
             board[row - 1][column - 1] = getCurrentPlayer(); //we have coordinates from 1, but in the array it's from 0, so we do -1
+            numberOfMoves++;
             displayBoard();
             if (itsAWin(row - 1, column - 1)) {
-                hasWon = true;
+                gameOver = true;
                 System.out.println("\t" + getCurrentPlayer() + " wins!\n");
+            } else if (numberOfMoves == boardSize * boardSize) {
+                gameOver = true;
+                System.out.println("\tThe board is full, it's a draw!\n");
             } else colorFlag = !colorFlag; //next player's turn
         }
     }
@@ -71,7 +63,6 @@ class Board {
             columns[i] = i + 1;
             System.out.printf("%3d", columns[i]);
         }
-
         System.out.println();
         System.out.println();
         for (int i = 0; i < boardSize; i++) {
@@ -98,37 +89,32 @@ class Board {
     public boolean fiveCounted(int r, int c, int rDirection, int cDirection, char player) {
         int count = 1;
         int row = r + rDirection;
-        int col = c + cDirection;
-        while ((row >= 0) && (col >= 0) && (row < boardSize) && (col < boardSize) &&
-                (board[row][col] == player)) {
+        int column = c + cDirection;
+        while ((row >= 0) && (column >= 0) && (row < boardSize) && (column < boardSize) &&
+                (board[row][column] == player)) {
             count += 1;
             row = row + rDirection;
-            col = col + cDirection;
+            column = column + cDirection;
         }
         row = r - rDirection;
-        col = c - cDirection;
-        while ((row < boardSize) && (col < boardSize) && (row >= 0) && (col >= 0) &&
-                (board[row][col] == player)) {
+        column = c - cDirection;
+        while ((row >= 0) && (column >= 0) && (row < boardSize) && (column < boardSize) &&
+                (board[row][column] == player)) {
             count += 1;
             row = row - rDirection;
-            col = col - cDirection;
+            column = column - cDirection;
         }
         return count == winning;
     }
 
-
     public void printWhoIsNext() {
-        if (hasWon == false) {
+        if (gameOver == false) {
             String nextPlayer;
             if (colorFlag == true) { //B
-                nextPlayer = "black"; //maybe with a switch?
+                nextPlayer = "black";
             } else nextPlayer = "white";
             System.out.print("It's " + nextPlayer + "'s turn. ");
         }
-    }
-
-    public boolean getHasWon() {
-        return hasWon;
     }
 
 }
