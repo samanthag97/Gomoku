@@ -40,15 +40,20 @@ class Board {
 
     public boolean checkPosition(int row, int column) {
         boolean error = false;
-        if (row > boardSize || column > boardSize || row < 1 || column < 1 || (board[row - 1][column - 1] != '+'))
+        if (row > boardSize || column > boardSize || row < 1 || column < 1){
             error = true;
+			System.out.print("This position is outside the board. ");
+		}
+		else if(board[row - 1][column - 1] != '+'){
+			error = true;
+			System.out.print("This position is already taken. ");
+		}
         return error;
     }
 
     public void putAStone(int row, int column) {
         if (checkPosition(row, column))
-            System.out.println("Invalid input. Please digit a valid one.");
-		
+            System.out.println("Please digit a valid input.");		
         else {				
             board[row - 1][column - 1] = getCurrentPlayer(); //we have coordinates from 1, but in the array it's from 0, so we do -1
             displayBoard();

@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.lang.NumberFormatException;
 
 class Game {
 
@@ -15,7 +16,7 @@ class Game {
     public void start() {
         Board board = new Board();
         Scanner scanner = new Scanner(System.in);
-        scanner.useDelimiter("[\\p{Punct}\\p{javaWhitespace}]+"); //any punctuation characters or whitespaces allowed
+        //scanner.useDelimiter("[\\p{Punct}\\p{javaWhitespace}]+"); //any punctuation characters or whitespaces allowed
         System.out.println("Hi! This is a Gomoku game.");
         System.out.println("The first player to put five stones in a row wins!");
         System.out.println("This is the board:");
@@ -27,16 +28,20 @@ class Game {
 			}
 			else{
 				board.printWhoIsNext();
-				System.out.println("Enter your move (row and column): \t[or digit 0 to exit the game.]");
+				System.out.println("Enter your move (row and column): \t[or digit x to exit the game.]");
+				
 				try {
-					row = scanner.nextInt();
-					if (row == 0)
+					String r = scanner.next();
+					if (r.equalsIgnoreCase("x"))
 						break;
-					column = scanner.nextInt();
+					String c = scanner.next();		
+			
+					row = Integer.valueOf(r);
+					column = Integer.valueOf(c);					
 					board.putAStone(row, column);
-				} catch (InputMismatchException error) {
-					System.out.println("An error happened: " + "No characters allowed.");
-					scanner.next();
+				} catch (NumberFormatException error) {
+					System.out.println("Sorry, only integer numbers are allowed.");
+					//scanner.next();
 				}
 			}
         }
