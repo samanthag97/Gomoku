@@ -5,9 +5,14 @@ import java.lang.NumberFormatException;
 class Game {
 
     private static final String exitGame = "x";
+    private Board board;
+
+    public Game(Board board) {
+        this.board = board;
+    }
+
 
     public void start() {
-        Board board = new Board();
         Scanner scanner = new Scanner(System.in);
         //scanner.useDelimiter("[\\p{Punct}\\p{javaWhitespace}]+"); //any punctuation characters or whitespaces allowed		
         System.out.println("Hi! This is a Gomoku game.");

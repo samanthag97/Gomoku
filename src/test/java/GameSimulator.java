@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayInputStream;
@@ -8,6 +9,8 @@ import java.io.PrintStream;
 public class GameSimulator {
 
     //can do a single test that takes all the games one after the other
+
+    /*Wins*/
 
     @Test
     public void gameWithBlackRowWinner() {
@@ -20,7 +23,7 @@ public class GameSimulator {
         System.setIn(fakeInput);
         //System.setOut(new PrintStream(fakeOutput));
 
-        Game game = new Game();
+        Game game = new Game(new Board());
         game.start();
 
         //System.setOut(outputBackup);
@@ -36,7 +39,7 @@ public class GameSimulator {
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
 
-        Game game = new Game();
+        Game game = new Game(new Board());
         game.start();
     }
 
@@ -47,7 +50,7 @@ public class GameSimulator {
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
 
-        Game game = new Game();
+        Game game = new Game(new Board());
         game.start();
     }
 
@@ -58,7 +61,7 @@ public class GameSimulator {
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
 
-        Game game = new Game();
+        Game game = new Game(new Board());
         game.start();
     }
 
@@ -69,7 +72,7 @@ public class GameSimulator {
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
 
-        Game game = new Game();
+        Game game = new Game(new Board());
         game.start();
     }
 
@@ -80,7 +83,21 @@ public class GameSimulator {
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
 
-        Game game = new Game();
+        Game game = new Game(new Board());
+        game.start();
+    }
+
+
+    /*Draw*/
+    @Test
+    public void drawTest() {
+        Board board = new Board();
+        for (int row = 1; row <= 15; row++) {
+            for (int column = 1; column <= 15; column++) {
+                board.putAStone(row, column);
+            }
+        }
+        Game game = new Game(board);
         game.start();
     }
 
@@ -93,7 +110,7 @@ public class GameSimulator {
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
 
-        Game game = new Game();
+        Game game = new Game(new Board());
         game.start();
     }
 
@@ -104,7 +121,7 @@ public class GameSimulator {
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
 
-        Game game = new Game();
+        Game game = new Game(new Board());
         game.start();
     }
 
@@ -114,7 +131,7 @@ public class GameSimulator {
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
 
-        Game game = new Game();
+        Game game = new Game(new Board());
         game.start();
     }
 
@@ -124,7 +141,7 @@ public class GameSimulator {
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
 
-        Game game = new Game();
+        Game game = new Game(new Board());
         game.start();
     }
 }
