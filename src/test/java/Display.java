@@ -1,10 +1,10 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-public class DisplayerTest {
+public class Display {
 
     @Test
-    public void stoneAtRow5Column7() {
+    public void blackStoneAtRow5Column7() {
         Board board = new Board();
         board.putAStone(5, 7);
         char[] row = board.getRow(4); //row 5 has index 4 because we start from 0
