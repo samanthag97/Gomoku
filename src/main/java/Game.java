@@ -5,7 +5,7 @@ class Game {
 
     private static final String exitGame = "x";
 
-    public void start() { ///////TODO dividere in pazzi
+    public void start() { ///////TODO dividere in pezzi
         Scanner scanner = new Scanner(System.in);
         GameBoard gameBoard = new GameBoard();
         System.out.println("Hi! This is a Gomoku game.");
@@ -32,7 +32,7 @@ class Game {
             System.out.println(r + ", " + c);
             try {
                 row = Math.abs(Integer.valueOf(r) - 15);
-                column = Integer.valueOf(c) - 1;
+                column = Integer.valueOf(c) - 1; //TODO ascii per lettere
                 gameBoard.putAStone(row, column);
             } catch (NumberFormatException error) {
                 System.out.println("Sorry, only integer numbers are allowed.");

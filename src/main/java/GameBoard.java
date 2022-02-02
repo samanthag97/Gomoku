@@ -56,18 +56,24 @@ class GameBoard {
     public void displayBoard() { ///////TODO lettere?
         System.out.println();
         int[] columns = new int[BOARD_SIZE];
+        System.out.print("   ");
         for (int i = 0; i < BOARD_SIZE; i++) {
             columns[i] = i + 1;
             System.out.printf("%3d", columns[i]);
         }
         System.out.println();
-        System.out.println();
         for (int i = 0; i < BOARD_SIZE; i++) {
+            System.out.printf("%3d", BOARD_SIZE - i);
             for (int j = 0; j < BOARD_SIZE; j++) {
                 System.out.print("  ");
                 board[i][j].print();
             }
-            System.out.println("\t" + (BOARD_SIZE - i));
+            System.out.println("  "+ (BOARD_SIZE - i));
+        }
+        System.out.print("   ");
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            columns[i] = i + 1;
+            System.out.printf("%3d", columns[i]);
         }
         System.out.println();
     }
