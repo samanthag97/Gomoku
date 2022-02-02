@@ -7,8 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
 import java.util.NoSuchElementException;
 
 public class Simulate {
@@ -24,7 +22,7 @@ public class Simulate {
     public void winningGames(String gameMoves){
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
-        Game game = new Game(new Board());
+        Game game = new Game();
         game.start();
     }
    /* @Test
@@ -114,7 +112,7 @@ public class Simulate {
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
 
-        Game game = new Game(new Board());
+        Game game = new Game();
         game.start();
     }
 
@@ -128,7 +126,7 @@ public class Simulate {
         Exception exception = Assertions.assertThrows(NoSuchElementException.class, () -> {
             ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
             System.setIn(fakeInput);
-            Game game = new Game(new Board());
+            Game game = new Game();
             game.start();
         });
         Assertions.assertEquals("No line found", exception.getMessage());
