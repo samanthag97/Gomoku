@@ -1,30 +1,27 @@
 public class Position {
-
-    private char content; ///////TODO Enum?
-    private static final char EMPTY = '+';
+    private Player content;
 
     public Position() {
-        content = EMPTY;
+        content = Player.EMPTY;
     }
 
-    public void changeContent(char newContent) {
-//////////TODO check
+    public void changeContent(Player newContent) {
         content = newContent;
     }
 
-    public char getContent() {
+    public Player getContent() {
         return content;
     }
 
     public boolean isTaken() {
-        if (content != EMPTY) {
+        if (content != Player.EMPTY) {
             return true;
         }
         return false;
     }
 
-    public void print(){
-        System.out.print(content);
+    public void print() {
+        System.out.print(content.getCharacter());
     }
 
 

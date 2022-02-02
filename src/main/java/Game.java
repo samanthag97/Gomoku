@@ -15,8 +15,7 @@ class Game {
         int row;
         int column;
         while (!gameBoard.gameOver) {
-            String nextPlayer = getNextPlayer(gameBoard);
-            System.out.println("It's " + nextPlayer + " turn.");
+            System.out.println("It's " + gameBoard.getCurrentPlayer().name() + " turn.");
             System.out.println("Enter your move: \t[or digit x to exit the game.]");
             System.out.print("Row: ");
             String r = scanner.nextLine().trim();
@@ -32,7 +31,7 @@ class Game {
             }
             System.out.println(r + ", " + c);
             try {
-                row = Integer.valueOf(r) - 1;
+                row = Math.abs(Integer.valueOf(r) - 15);
                 column = Integer.valueOf(c) - 1;
                 gameBoard.putAStone(row, column);
             } catch (NumberFormatException error) {
@@ -42,13 +41,6 @@ class Game {
         scanner.close();
     }
 
-    private String getNextPlayer(GameBoard gameBoard) {
-        switch (gameBoard.getCurrentPlayer()) {
-            case 'W': ///////TODO
-                return "white";
-            default: ///////TODO
-                return "black";
-        }
-    }
+
 
 }

@@ -4,10 +4,8 @@ class GameBoard {
     private boolean isBlackTurn;
     public boolean gameOver;
     private int positionsTaken;
-    private static final char BLACK = 'B';
-    private static final char WHITE = 'W';
     private static final int WINNING = 5;
-    private static final int BOARD_SIZE = 15; ///////TODO input?
+    private static final int BOARD_SIZE = 15;
 
     public GameBoard() {
         this.initializeBoard();
@@ -24,9 +22,9 @@ class GameBoard {
         }
     }
 
-    public char getCurrentPlayer() {
-        if (isBlackTurn) return BLACK;
-        else return WHITE;
+    public Player getCurrentPlayer() {
+        if (isBlackTurn) return Player.BLACK;
+        else return Player.WHITE;
     }
 
     public boolean isOutside(int row, int column) {
@@ -47,7 +45,7 @@ class GameBoard {
             displayBoard();
             if (itsAWin(row, column)) {
                 gameOver = true;
-                System.out.println("\t" + getCurrentPlayer() + " wins!\n");
+                System.out.println("\t" + getCurrentPlayer().name() + " wins!\n");
             } else if (positionsTaken == BOARD_SIZE * BOARD_SIZE) {
                 gameOver = true;
                 System.out.println("\tThe board is full, it's a draw!\n");
@@ -69,7 +67,7 @@ class GameBoard {
                 System.out.print("  ");
                 board[i][j].print();
             }
-            System.out.println("\t" + (i + 1));
+            System.out.println("\t" + (BOARD_SIZE - i));
         }
         System.out.println();
     }
@@ -81,20 +79,18 @@ class GameBoard {
                 thereAreFive(row, column, 1, -1, getCurrentPlayer()); //in diagonal down-up
     }
 
-    public boolean thereAreFive(int r, int c, int rDirection, int cDirection, char player) {
+    public boolean thereAreFive(int r, int c, int rDirection, int cDirection, Player player) {
         int count = 1;
         int row = r + rDirection;
         int column = c + cDirection;
-        while (!isOutside(row, column) &&
-                (board[row][column].getContent() == player)) {
+        while (!isOutside(row, column) && (board[row][column].getContent() == player)) {
             count += 1;
             row = row + rDirection;
             column = column + cDirection;
         }
         row = r - rDirection;
         column = c - cDirection;
-        while (!isOutside(row, column) &&
-                (board[row][column].getContent() == player)) {
+        while (!isOutside(row, column) && (board[row][column].getContent() == player)) {
             count += 1;
             row = row - rDirection;
             column = column - cDirection;
