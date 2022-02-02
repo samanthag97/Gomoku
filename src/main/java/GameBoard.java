@@ -7,7 +7,7 @@ class GameBoard {
     private static final char BLACK = 'B';
     private static final char WHITE = 'W';
     private static final int WINNING = 5;
-    private static final int BOARD_SIZE = 15;
+    private static final int BOARD_SIZE = 15; ///////TODO input?
 
     public GameBoard() {
         this.initializeBoard();
@@ -55,7 +55,7 @@ class GameBoard {
         }
     }
 
-    public void displayBoard() {
+    public void displayBoard() { ///////TODO lettere?
         System.out.println();
         int[] columns = new int[BOARD_SIZE];
         for (int i = 0; i < BOARD_SIZE; i++) {

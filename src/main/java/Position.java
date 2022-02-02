@@ -1,6 +1,6 @@
 public class Position {
 
-    private char content;
+    private char content; ///////TODO Enum?
     private static final char EMPTY = '+';
 
     public Position() {

@@ -5,7 +5,7 @@ class Game {
 
     private static final String exitGame = "x";
 
-    public void start() {
+    public void start() { ///////TODO dividere in pazzi
         Scanner scanner = new Scanner(System.in);
         GameBoard gameBoard = new GameBoard();
         System.out.println("Hi! This is a Gomoku game.");
@@ -44,9 +44,9 @@ class Game {
 
     private String getNextPlayer(GameBoard gameBoard) {
         switch (gameBoard.getCurrentPlayer()) {
-            case 'W':
+            case 'W': ///////TODO
                 return "white";
-            default:
+            default: ///////TODO
                 return "black";
         }
     }

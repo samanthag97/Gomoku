@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-public class Display {
+public class Display { ///////TODO test inutile; eliminiamo o mettiamo roba utile?
 
     /*@Test
     public void blackStoneAtRow5Column7() {
