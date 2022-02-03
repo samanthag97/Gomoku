@@ -9,12 +9,12 @@ import java.util.NoSuchElementException;
 public class Simulate {
 
     @ParameterizedTest
-    @ValueSource(strings = {"1\n 2\n 3\n 3\n 1\n 4\n 4\n 4 \n1 \n3\n 5\n 5\n 1\n 5\n 6\n 6\n 1\n 6\n 7\n 7\n",  //row
-            "1\n 2\n 3\n 3 \n1 \n4\n 4\n 3\n 1\n 3\n 2\n 3\n 1\n 8\n 5\n 3\n 6\n 6\n 6\n 3\n",  //column
-            "1 \n2\n 4\n 6\n 2\n 3\n 6\n 8\n 5\n 6\n 9\n 10\n 4\n 5\n 13\n 6\n 7\n 8\n 1\n 15\n 3\n 4\n",   //diagonal
-            "2 \n1 \n4 \n6 \n3 \n2 \n6 \n8 \n6 \n5 \n9 \n10\n 5\n 4\n 13\n 6 \n4 \n3\n",    //diagonal
-            "4\n 6\n 2 \n12\n 6\n 7\n 4\n 10 \n9\n 10\n 3\n 11\n 13\n 6\n 5\n 9\n 1\n 1\n 6\n 8\n", //diagonal
-            "4\n 6\n 5\n 12\n 6\n 8\n 7\n 10\n 9 \n10\n 6\n 11\n 13\n 6\n 8\n 9\n 1 \n1\n9\n 8\n"   //diagonal
+    @ValueSource(strings = {"1\n b\n 3\n c\n 1\n d\n 4\n e \n1 \nc\n 5\n e\n 1\n e\n 6\n f\n 1\n f\n 7\n g\n",  //row
+            "1\n b\n 3\n c \n1 \nd\n 4\n c\n 1\n c\n 2\n c\n 1\n h\n 5\n c\n 6\n f\n 6\n c\n",  //column
+            "1 \nB\n 4\n F\n 2\n c\n 6\n H\n 5\n f\n 9\n J\n 4\n e\n 13\n f\n 7\n h\n 1\n o\n 3\n d\n",   //diagonal
+            "2 \na \n4 \nf \n3 \nB \n6 \nh \n6 \ne \n9 \nj\n 5\n d\n 13\n f \n4 \nc\n",    //diagonal
+            "4\n f\n 2 \nL\n 6\n g\n 4\n J \n9\n j\n 3\n k\n 13\n f\n 5\n i\n 1\n a\n 6\n h\n", //diagonal
+            "4\n f\n 5\n L\n 6\n h\n 7\n j\n 9 \nj\n 6\n k\n 13\n f\n 8\n i\n 1 \na\n9\n h\n"   //diagonal
     }) //6 games
     public void winningGames(String gameMoves){
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
@@ -44,10 +44,10 @@ public class Simulate {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"1\n 2\n 3\n 3 \n1 \n3\n 4\n 4 \n1\n 4\n 5\n 5\n 1\n 6 \n6\n 6\n 1\n 7\n 7\n 8\n 1\n 5\n",  //row
-            "1\n 2\n 3\n 3\n 2\n 2 \n4\n 4 \n3 \n2 \n5\n 5\n 6\n 2\n 6\n 6\n 5\n 2\n 7\n 8\n 4\n 2\n",  //column
-            "1\n 1\n 6\n 8\n 2\n 2 \n5\n 8\n 4\n 4\n 5\n 6 \n5 \n5 \n9 \n9\n 6\n 6\n 7\n 9\n 3\n 3\n",  //diagonal
-            "15\n 1\n 6\n 8\n 14 \n2 \n5\n 8\n 12\n 4\n 5\n 6\n 11\n 5\n 9\n 9\n 10\n 6\n 7\n 9\n 13\n 3\n" //diagonal
+    @ValueSource(strings = {"1\n b\n 3\n c \n1 \nc\n 4\n d \n1\n d\n 5\n e\n 1\n f \n6\n f\n 1\n g\n 7\n h\n 1\n e\n",  //row
+            "1\n b\n 3\n c\n 2\n b \n4\n d \n3 \nb \n5\n e\n 6\n b\n 6\n f\n 5\n b\n 7\n h\n 4\n b\n",  //column
+            "1\n a\n 6\n h\n 2\n b \n5\n h\n 4\n d\n 5\n f \n5 \ne \n9 \ni\n 6\n f\n 7\n i\n 3\n c\n",  //diagonal
+            "15\n a\n 6\n h\n 14 \nb \n5\n h\n 12\n d\n 5\n f\n 11\n e\n 9\n i\n 10\n f\n 7\n i\n 13\n c\n" //diagonal
     })  //4 games
     public void notWinningOverlines(String gameMoves){
         Exception exception = Assertions.assertThrows(NoSuchElementException.class, () -> {
