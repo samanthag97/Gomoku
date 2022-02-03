@@ -26,11 +26,11 @@ public class Simulate {
     @Test
     public void drawGame() {
         StringBuilder sb = new StringBuilder();
-        for (int row = 1; row <= 15; row++) {
-            for (int column = 1; column <= 15; column = column + 2) {
+        for (char column = 'A'; column <= 'O'; column++) {
+            for (int row = 1; row <= 15; row = row + 2) {
                 sb.append(row + "\n" + column + "\n");
             }
-            for (int column = 2; column <= 15; column = column + 2) {
+            for (int row = 2; row <= 15; row = row + 2) {
                 sb.append(row + "\n" + column + "\n");
             }
         }
