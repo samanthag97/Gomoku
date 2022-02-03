@@ -6,12 +6,15 @@ class GameBoard {
     private int positionsTaken;
     private static final int WINNING = 5;
     private static final int BOARD_SIZE = 15;
+	private static final int FIRST_LETTER = 65; //unicode for 'A' is 65
+	private char[] axes;
 
     public GameBoard() {
         this.initializeBoard();
         isBlackTurn = true;
         gameOver = false;
         positionsTaken = 0;
+		axes = new char[BOARD_SIZE];
     }
 
     public void initializeBoard() {
@@ -55,12 +58,13 @@ class GameBoard {
 
     public void displayBoard() { ///////TODO lettere?
         System.out.println();
-        int[] columns = new int[BOARD_SIZE];
+		displayAxes();
+        /*int[] columns = new int[BOARD_SIZE];
         System.out.print("   ");
         for (int i = 0; i < BOARD_SIZE; i++) {
             columns[i] = i + 1;
             System.out.printf("%3d", columns[i]);
-        }
+        }*/
         System.out.println();
         for (int i = 0; i < BOARD_SIZE; i++) {
             System.out.printf("%3d", BOARD_SIZE - i);
@@ -69,14 +73,27 @@ class GameBoard {
                 board[i][j].print();
             }
             System.out.println("  "+ (BOARD_SIZE - i));
-        }
-        System.out.print("   ");
-        for (int i = 0; i < BOARD_SIZE; i++) {
+        }        
+		System.out.println();
+		displayAxes();
+        /*for (int i = 0; i < BOARD_SIZE; i++) {
             columns[i] = i + 1;
             System.out.printf("%3d", columns[i]);
-        }
-        System.out.println();
+        }*/        
     }
+	
+	public void displayAxes(){
+		
+		System.out.print("     ");
+		for(int i=0; i<BOARD_SIZE; i++){
+			axes[i] = (char)(FIRST_LETTER + i);
+			System.out.print(axes[i] + "  ");
+		}
+		System.out.println();
+	}
+	
+	
+	
 
     public boolean itsAWin(int row, int column) {
         return thereAreFive(row, column, 0, 1, getCurrentPlayer()) || //in row
