@@ -12,43 +12,49 @@ class Game {
         System.out.println("The first player to put five stones in a row wins!");
         System.out.println("This is the board:");
         gameBoard.displayBoard();
-        int row;
+        int row = 1;
         int column;
         while (!gameBoard.gameOver) {
             System.out.println("It's " + gameBoard.getCurrentPlayer().name() + " turn.");
             System.out.println("Enter your move: \t[or digit x to exit the game.]");
-            System.out.print("Row: ");
+            System.out.print("Enter row number: ");
             String r = scanner.nextLine().trim();
             if (r.equalsIgnoreCase(exitGame)) {
                 System.out.println("Closing the game, bye!");
                 break;
             }
-            System.out.print("Column: ");
+            boolean validInt = false;
+            do {
+                try {
+                    row = Math.abs(Integer.parseInt(r) - 15);
+                    validInt=true;
+                } catch (NumberFormatException error) {
+                    System.out.println("Sorry, only integer numbers are allowed. Enter row number: ");
+                    r = scanner.nextLine().trim();
+                }
+            } while (!validInt);
+            System.out.print("Enter column letter: ");
             String c = scanner.nextLine().trim().toUpperCase();
             if (c.equalsIgnoreCase(exitGame)) {
                 System.out.println("Closing the game, bye!");
                 break;
             }
-            System.out.println(r + ", " + c);
-            try {
-                row = Math.abs(Integer.valueOf(r) - 15);
-                //column = Integer.valueOf(c) - 1; //TODO ascii per lettere
-				column = getValueOfColumn(c);
-                gameBoard.putAStone(row, column);
-            } catch (NumberFormatException error) {
-                System.out.println("Sorry, only integer numbers are allowed.");
+            while (!c.matches("[A-O]")) {
+                System.out.print("Please enter a valid column letter: ");
+                c = scanner.nextLine().trim().toUpperCase();
             }
+            System.out.println(r + ", " + c);
+            column = getValueOfColumn(c);
+            gameBoard.putAStone(row, column);
         }
         scanner.close();
     }
-	
-	public int getValueOfColumn(String c){
-		char tmp  = c.charAt(0);
-		int column = Math.abs(65 - tmp);
-		System.out.println(column);
-		return column;
-	}
 
+    public int getValueOfColumn(String c) {
+        char tmp = c.charAt(0);
+        int column = Math.abs(65 - tmp);
+        return column;
+    }
 
 
 }
