@@ -1,60 +1,42 @@
 import java.util.Scanner;
-import java.lang.NumberFormatException;
 
 class Game {
 
-    private static final String exitGame = "x";
+    private static final String exitCommand = "x";
 
     public void start() { ///////TODO dividere in pezzi
         Scanner scanner = new Scanner(System.in);
+        scanner.useDelimiter("[\\p{Punct}\\p{javaWhitespace}]+"); //any punctuation characters or whitespaces allowed
         GameBoard gameBoard = new GameBoard();
         System.out.println("Hi! This is a Gomoku game.");
         System.out.println("The first player to put five stones in a row wins!");
         System.out.println("This is the board:");
         gameBoard.displayBoard();
-        int row = 1;
+        int row;
         int column;
-        while (!gameBoard.gameOver) {
+        while (!gameBoard.isGameOver) {
             System.out.println("It's " + gameBoard.getCurrentPlayer().name() + " turn.");
-            System.out.println("Enter your move: \t[or digit x to exit the game.]");
-            System.out.print("Enter row number: ");
-            String r = scanner.nextLine().trim();
-            if (r.equalsIgnoreCase(exitGame)) {
+            System.out.println("Enter your move (row and column): \t[or digit \"" + exitCommand + "\" to exit the game.]");
+            String rowInput = scanner.next();
+            if (rowInput.equalsIgnoreCase(exitCommand)) {
                 System.out.println("Closing the game, bye!");
                 break;
             }
-            boolean validInt = false;
-            do {
-                try {
-                    row = Math.abs(Integer.parseInt(r) - 15);
-                    validInt=true;
-                } catch (NumberFormatException error) {
-                    System.out.println("Sorry, only integer numbers are allowed. Enter row number: ");
-                    r = scanner.nextLine().trim();
-                }
-            } while (!validInt);
-            System.out.print("Enter column letter: ");
-            String c = scanner.nextLine().trim().toUpperCase();
-            if (c.equalsIgnoreCase(exitGame)) {
-                System.out.println("Closing the game, bye!");
-                break;
+            String columnInput = scanner.next().toUpperCase();
+            while (!rowInput.matches("\\d+")) {
+                System.out.println("Please enter a valid row number (you entered \"" + rowInput + "\"):");
+                rowInput = scanner.next();
             }
-            while (!c.matches("[A-O]")) {
-                System.out.print("Please enter a valid column letter: ");
-                c = scanner.nextLine().trim().toUpperCase();
+            row = 15 - Integer.valueOf(rowInput);
+            while (!columnInput.matches("[a-zA-Z]")) {
+                System.out.println("Please enter a valid column letter(you entered \"" + columnInput + "\"):");
+                columnInput = scanner.next().toUpperCase();
             }
-            System.out.println(r + ", " + c);
-            column = getValueOfColumn(c);
+            column = columnInput.charAt(0) - 'A';
+            System.out.println("Position: " + rowInput + ", " + columnInput);
             gameBoard.putAStone(row, column);
         }
         scanner.close();
     }
-
-    public int getValueOfColumn(String c) {
-        char tmp = c.charAt(0);
-        int column = Math.abs(65 - tmp);
-        return column;
-    }
-
 
 }

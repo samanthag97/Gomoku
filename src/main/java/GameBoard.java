@@ -2,7 +2,7 @@ class GameBoard {
 
     private Position[][] board;
     private boolean isBlackTurn;
-    public boolean gameOver;
+    public boolean isGameOver;
     private int positionsTaken;
     private static final int WINNING = 5;
     private static final int BOARD_SIZE = 15;
@@ -12,7 +12,7 @@ class GameBoard {
     public GameBoard() {
         this.initializeBoard();
         isBlackTurn = true;
-        gameOver = false;
+        isGameOver = false;
         positionsTaken = 0;
 		axes = new char[BOARD_SIZE];
     }
@@ -47,10 +47,10 @@ class GameBoard {
             positionsTaken++;
             displayBoard();
             if (itsAWin(row, column)) {
-                gameOver = true;
+                isGameOver = true;
                 System.out.println("\t" + getCurrentPlayer().name() + " wins!\n");
             } else if (positionsTaken == BOARD_SIZE * BOARD_SIZE) {
-                gameOver = true;
+                isGameOver = true;
                 System.out.println("\tThe board is full, it's a draw!\n");
             } else isBlackTurn = !isBlackTurn;
         }
@@ -76,6 +76,8 @@ class GameBoard {
         }        
 		System.out.println();
 		displayAxes();
+        System.out.println();
+
         /*for (int i = 0; i < BOARD_SIZE; i++) {
             columns[i] = i + 1;
             System.out.printf("%3d", columns[i]);

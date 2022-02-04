@@ -56,7 +56,7 @@ public class Simulate {
             Game game = new Game();
             game.start();
         });
-        Assertions.assertEquals("No line found", exception.getMessage());
+        Assertions.assertEquals(null, exception.getMessage());
     }
 
 }
