@@ -40,7 +40,7 @@ class GameBoard {
                 break;
             }
             String columnInput = scanner.next().toUpperCase();
-            while (!rowInput.matches("[0-" + BOARD_SIZE + "]")) {
+            while (!rowInput.matches("[1-9]|1[0-5]")) {
                 System.out.println("Please enter a valid row number (you entered \"" + rowInput + "\"):");
                 rowInput = scanner.next();
             }
