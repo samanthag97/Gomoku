@@ -25,9 +25,6 @@ class GameBoard {
         Scanner scanner = new Scanner(System.in);
         scanner.useDelimiter("[\\p{Punct}\\p{javaWhitespace}]+"); //any punctuation characters or whitespaces allowed
         GameBoard gameBoard = new GameBoard();
-        System.out.println("Hi! This is a Gomoku game.");
-        System.out.println("The first player to put five stones in a row wins!");
-        System.out.println("This is the board:");
         gameBoard.displayBoard();
         int row;
         int column;
@@ -44,7 +41,7 @@ class GameBoard {
                 System.out.println("Please enter a valid row number (you entered \"" + rowInput + "\"):");
                 rowInput = scanner.next();
             }
-            row = 15 - Integer.valueOf(rowInput);
+            row = BOARD_SIZE - Integer.valueOf(rowInput);
             while (!columnInput.matches("[A-" + LAST_LETTER + "]")) {
                 System.out.println("Please enter a valid column letter(you entered \"" + columnInput + "\"):");
                 columnInput = scanner.next().toUpperCase();
