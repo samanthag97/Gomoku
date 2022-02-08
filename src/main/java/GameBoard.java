@@ -9,7 +9,6 @@ class GameBoard {
     private static final int WINNING = 5;
     private static final int BOARD_SIZE = 15;
     private static final int FIRST_LETTER = 65; //unicode for 'A' is 65
-    private static final char LAST_LETTER = 'O';
     private char[] axes;
     private static final String exitCommand = "x";
 
@@ -26,7 +25,7 @@ class GameBoard {
         scanner.useDelimiter("[\\p{Punct}\\p{javaWhitespace}]+"); //any punctuation characters or whitespaces allowed
         GameBoard gameBoard = new GameBoard();
         gameBoard.displayBoard();
-        int row;
+        int row = 0;
         int column;
         while (!gameBoard.isGameOver) {
             System.out.println("It's " + gameBoard.getCurrentPlayer().name() + " turn.");
@@ -37,13 +36,25 @@ class GameBoard {
                 break;
             }
             String columnInput = scanner.next().toUpperCase();
-            while (!rowInput.matches("[1-9]|1[0-5]")) {
-                System.out.println("Please enter a valid row number (you entered \"" + rowInput + "\"):");
-                rowInput = scanner.next();
+            boolean isDone = false;
+            while (!isDone) {
+                if (rowInput.matches("\\d+")) {
+                    int intInput = Integer.valueOf(rowInput);
+                    if (intInput <= BOARD_SIZE && intInput > 0) {
+                        row = BOARD_SIZE - intInput;
+                        isDone = true;
+                    } else {
+                        System.out.println(intInput + " is outside the board! Please enter a valid row number:");
+                        rowInput = scanner.next();
+                    }
+                } else {
+                    System.out.println("Please enter a valid integer for the row (you entered \"" + rowInput + "\"):");
+                    rowInput = scanner.next();
+                }
             }
-            row = BOARD_SIZE - Integer.valueOf(rowInput);
-            while (!columnInput.matches("[A-" + LAST_LETTER + "]")) {
-                System.out.println("Please enter a valid column letter(you entered \"" + columnInput + "\"):");
+            char lastLetter = (char) (FIRST_LETTER + BOARD_SIZE);
+            while (!columnInput.matches("[" + FIRST_LETTER + "-" + lastLetter + "]")) {
+                System.out.println("Please enter a valid column letter (you entered \"" + columnInput + "\"):");
                 columnInput = scanner.next().toUpperCase();
             }
             column = columnInput.charAt(0) - 'A';
