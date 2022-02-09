@@ -11,7 +11,7 @@ class Game {
         System.out.println("Hi! This is a Gomoku game.");
         System.out.println("The first player to put five stones in a row wins!");
         System.out.println("This is the board:");
-        gameBoard.displayBoard();
+        gameBoard.printBoard();
         int row;
         int column;
         while (!gameBoard.isGameOver) {

@@ -9,11 +9,10 @@ class GameBoard {
     private int positionsTaken;
     private static final int WINNING = 5;
     private static final int BOARD_SIZE = 15;
-    private static final int FIRST_LETTER = 65; //unicode for 'A' is 65
-    private static final int LAST_LETTER = FIRST_LETTER + BOARD_SIZE; //if i change the size of the board this should change too
+    private static final char FIRST_LETTER = 'A';
+    private static final char LAST_LETTER = (char) (FIRST_LETTER + BOARD_SIZE);
     private static final String exitCommand = "x";
-	
-	private int row;
+
 
     public GameBoard() {
         this.initializeBoard();
@@ -22,77 +21,68 @@ class GameBoard {
         positionsTaken = 0;
     }
 
-    public void start() { ///////TODO dividere in pezzi
+    public void start() {
         Scanner scanner = new Scanner(System.in);
-        //scanner.useDelimiter("[\\p{Punct}\\p{javaWhitespace}]+"); //any punctuation characters or whitespaces allowed
         GameBoard gameBoard = new GameBoard();
-        gameBoard.displayBoard();
-        //int row;
+        gameBoard.printBoard();
+        int row;
         int column;
         while (!isGameOver) {
             System.out.println("It's " + gameBoard.getCurrentPlayer().name() + " turn.");
-            System.out.println("Enter your move: \t[or digit \"" + exitCommand + "\" to exit the game.]");	            
-			System.out.print("Insert Row: ");
-			String rowInput = getInput(scanner);
-			if (rowInput.equalsIgnoreCase(exitCommand)){
-				System.out.println("Closing the game, bye!");
-				break;
-			}
-			if(!validRow(rowInput))
-				System.out.println("Invalid input. Please digit a valid Integer");
-			else{ //meglio usare un altro modo, altrimenti se sbaglio colonna mi richiede anche la riga
-				System.out.print("Insert Column: ");
-				String columnInput = getInput(scanner);
-				if(!validColumn(columnInput))
-					System.out.println("Invalid input. Please digit a valid Character");
-				else{
-					row = BOARD_SIZE - Integer.valueOf(rowInput);				
-					char c = columnInput.charAt(0);
-					column = Math.abs(c-'A');
-					System.out.println("Position: " + rowInput + ", " + c);
-					gameBoard.putAStone(row, column);
-				}
-			}
+            System.out.println("Enter your move: \t[or digit \"" + exitCommand + "\" to exit the game.]");
+            System.out.print("Insert Row: ");
+            String rowInput = getInput(scanner);
+            if (isExit(rowInput)) System.exit(0);
+            while (!isValidRow(rowInput)) {
+                System.out.println("Invalid input. Please digit a valid Integer");
+                rowInput = getInput(scanner);
+            }
+            System.out.print("Insert Column: ");
+            String columnInput = getInput(scanner);
+            while (!isValidColumn(columnInput)) {
+                System.out.println("Invalid input. Please digit a valid Character");
+                columnInput = getInput(scanner);
+            }
+            row = BOARD_SIZE - Integer.valueOf(rowInput);
+            char columnChar = columnInput.charAt(0);
+            column = Math.abs(columnInput.charAt(0) - 'A');
+            System.out.println("Position: " + rowInput + ", " + columnChar);
+            gameBoard.putAStone(row, column);
         }
         scanner.close();
     }
-	
-	public String getInput(Scanner scanner){
-		String tmp = scanner.nextLine().trim();
-		String input = tmp.toUpperCase();		
-		return input;
-	}
-	
-	public boolean validRow(String rowInput){
-		boolean b = true;
-		if(rowInput.equalsIgnoreCase(exitCommand)) 
-			b = true;
-		else{
-			try{
-				int r = Integer.parseInt(rowInput);
-				if(r > 0 && r <= BOARD_SIZE)
-					b = true;
-				else b = false;
-			}
-			catch(NumberFormatException error){
-				b = false;
-			}
-		}
-		return b;
-	}
-	
-	public boolean validColumn(String columnInput){
-		boolean b = true;
-		if(columnInput.length()>1)
-			b = false;
-		else{
-			char c = columnInput.charAt(0);
-			if(c<FIRST_LETTER || c>=LAST_LETTER)
-				b = false;
-		}
-		return b;
-	}
-	
+
+    public String getInput(Scanner scanner) {
+        return scanner.nextLine().trim().toUpperCase();
+    }
+
+    public boolean isExit(String input) {
+        if (input.equalsIgnoreCase(exitCommand)) {
+            System.out.println("Closing the game, bye!");
+            return true;
+        } else
+            return false;
+    }
+
+    public boolean isValidRow(String rowInput) {
+        try {
+            int r = Integer.parseInt(rowInput);
+            if (r > 0 && r <= BOARD_SIZE)
+                return true;
+            else
+                return false;
+        } catch (NumberFormatException error) {
+            return false;
+        }
+    }
+
+    public boolean isValidColumn(String columnInput) {
+        if (columnInput.matches("[" + FIRST_LETTER + "-" + LAST_LETTER + "]")) { //esattamente una lettera compresa tra prima e ultima
+            return true;
+        } else
+            return false;
+    }
+
     public void initializeBoard() {
         board = new Position[BOARD_SIZE][BOARD_SIZE];
         for (int i = 0; i < BOARD_SIZE; i++) {
@@ -114,15 +104,12 @@ class GameBoard {
     }
 
     public void putAStone(int row, int column) {
-        //if (isOutside(row, column))
-        //System.out.println("This position is outside the board! Please digit a valid input.");
-        //else
         if (board[row][column].isTaken())
             System.out.println("This position is already taken! Please digit a valid input.");
         else {
             board[row][column].changeContent(getCurrentPlayer());
             positionsTaken++;
-            displayBoard();
+            printBoard();
             if (itsAWin(row, column)) {
                 isGameOver = true;
                 System.out.println("\t" + getCurrentPlayer().name() + " wins!\n");
@@ -133,10 +120,9 @@ class GameBoard {
         }
     }
 
-    public void displayBoard() { ///////TODO lettere?
+    public void printBoard() {
         System.out.println();
-        displayAxes();
-        System.out.println();
+        printLetters();
         for (int i = 0; i < BOARD_SIZE; i++) {
             System.out.printf("%3d", BOARD_SIZE - i);
             for (int j = 0; j < BOARD_SIZE; j++) {
@@ -145,17 +131,16 @@ class GameBoard {
             }
             System.out.println("  " + (BOARD_SIZE - i));
         }
-        System.out.println();
-        displayAxes();
+        printLetters();
         System.out.println();
     }
 
-    public void displayAxes() {
-		char[] axes = new char[BOARD_SIZE];;
+    public void printLetters() {
+        char[] letters = new char[BOARD_SIZE];
         System.out.print("     ");
         for (int i = 0; i < BOARD_SIZE; i++) {
-            axes[i] = (char) (FIRST_LETTER + i);
-            System.out.print(axes[i] + "  ");
+            letters[i] = (char) (FIRST_LETTER + i);
+            System.out.print(letters[i] + "  ");
         }
         System.out.println();
     }
