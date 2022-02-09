@@ -10,7 +10,7 @@ class Game {
     private static final String EXIT_COMMAND = "x";
 
     public Game(GameBoard gameBoard) {
-        this.gameBoard = gameBoard;
+        Game.gameBoard = gameBoard;
         boardSize = gameBoard.getBoardSize();
         firstLetter = gameBoard.getFirstLetter();
         lastLetter = (char) (firstLetter + boardSize);
@@ -61,19 +61,13 @@ class Game {
     public boolean isValidRow(String rowInput) {
         try {
             int r = Integer.parseInt(rowInput);
-            if (r > 0 && r <= boardSize)
-                return true;
-            else
-                return false;
+            return r > 0 && r <= boardSize;
         } catch (NumberFormatException error) {
             return false;
         }
     }
 
     public boolean isValidColumn(String columnInput) {
-        if (columnInput.matches("[" + firstLetter + "-" + lastLetter + "]")) { //esattamente una lettera compresa tra prima e ultima
-            return true;
-        } else
-            return false;
+        return columnInput.matches("[" + firstLetter + "-" + lastLetter + "]");
     }
 }

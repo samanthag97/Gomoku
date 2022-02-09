@@ -14,10 +14,7 @@ public class Position {
     }
 
     public boolean isTaken() {
-        if (content != Player.EMPTY) {
-            return true;
-        }
-        return false;
+        return content != Player.EMPTY;
     }
 
     public void print() {

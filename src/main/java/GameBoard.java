@@ -77,14 +77,14 @@ class GameBoard {
         int count = 1;
         int row = r + rDirection;
         int column = c + cDirection;
-        while (!isOutside(row, column) && (board[row][column].getContent() == player)) {
+        while (isInside(row, column) && (board[row][column].getContent() == player)) {
             count += 1;
             row = row + rDirection;
             column = column + cDirection;
         }
         row = r - rDirection;
         column = c - cDirection;
-        while (!isOutside(row, column) && (board[row][column].getContent() == player)) {
+        while (isInside(row, column) && (board[row][column].getContent() == player)) {
             count += 1;
             row = row - rDirection;
             column = column - cDirection;
@@ -92,11 +92,8 @@ class GameBoard {
         return count == WINNING;
     }
 
-    public boolean isOutside(int row, int column) {
-        if (row >= BOARD_SIZE || column >= BOARD_SIZE || row < 0 || column < 0) {
-            return true;
-        }
-        return false;
+    public boolean isInside(int row, int column) {
+        return row < BOARD_SIZE && column < BOARD_SIZE && row >= 0 && column >= 0;
     }
 
     public Player getCurrentPlayer() {
