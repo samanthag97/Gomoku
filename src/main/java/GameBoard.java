@@ -1,6 +1,3 @@
-import java.util.Scanner;
-import java.lang.NumberFormatException;
-
 class GameBoard {
 
     private Position[][] board;
@@ -10,9 +7,6 @@ class GameBoard {
     private static final int WINNING = 5;
     private static final int BOARD_SIZE = 15;
     private static final char FIRST_LETTER = 'A';
-    private static final char LAST_LETTER = (char) (FIRST_LETTER + BOARD_SIZE);
-    private static final String exitCommand = "x";
-
 
     public GameBoard() {
         this.initializeBoard();
@@ -21,86 +15,12 @@ class GameBoard {
         positionsTaken = 0;
     }
 
-    public void start() {
-        Scanner scanner = new Scanner(System.in);
-        GameBoard gameBoard = new GameBoard();
-        gameBoard.printBoard();
-        int row;
-        int column;
-        while (!isGameOver) {
-            System.out.println("It's " + gameBoard.getCurrentPlayer().name() + " turn.");
-            System.out.println("Enter your move: \t[or digit \"" + exitCommand + "\" to exit the game.]");
-            System.out.print("Insert Row: ");
-            String rowInput = getInput(scanner);
-            if (isExit(rowInput)) System.exit(0);
-            while (!isValidRow(rowInput)) {
-                System.out.println("Invalid input. Please digit a valid Integer");
-                rowInput = getInput(scanner);
-            }
-            System.out.print("Insert Column: ");
-            String columnInput = getInput(scanner);
-            while (!isValidColumn(columnInput)) {
-                System.out.println("Invalid input. Please digit a valid Character");
-                columnInput = getInput(scanner);
-            }
-            row = BOARD_SIZE - Integer.valueOf(rowInput);
-            char columnChar = columnInput.charAt(0);
-            column = Math.abs(columnInput.charAt(0) - 'A');
-            System.out.println("Position: " + rowInput + ", " + columnChar);
-            gameBoard.putAStone(row, column);
-        }
-        scanner.close();
-    }
-
-    public String getInput(Scanner scanner) {
-        return scanner.nextLine().trim().toUpperCase();
-    }
-
-    public boolean isExit(String input) {
-        if (input.equalsIgnoreCase(exitCommand)) {
-            System.out.println("Closing the game, bye!");
-            return true;
-        } else
-            return false;
-    }
-
-    public boolean isValidRow(String rowInput) {
-        try {
-            int r = Integer.parseInt(rowInput);
-            if (r > 0 && r <= BOARD_SIZE)
-                return true;
-            else
-                return false;
-        } catch (NumberFormatException error) {
-            return false;
-        }
-    }
-
-    public boolean isValidColumn(String columnInput) {
-        if (columnInput.matches("[" + FIRST_LETTER + "-" + LAST_LETTER + "]")) { //esattamente una lettera compresa tra prima e ultima
-            return true;
-        } else
-            return false;
-    }
-
     public void initializeBoard() {
         board = new Position[BOARD_SIZE][BOARD_SIZE];
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++)
                 board[i][j] = new Position();
         }
-    }
-
-    public Player getCurrentPlayer() {
-        if (isBlackTurn) return Player.BLACK;
-        else return Player.WHITE;
-    }
-
-    public boolean isOutside(int row, int column) {
-        if (row >= BOARD_SIZE || column >= BOARD_SIZE || row < 0 || column < 0) {
-            return true;
-        }
-        return false;
     }
 
     public void putAStone(int row, int column) {
@@ -170,5 +90,29 @@ class GameBoard {
             column = column - cDirection;
         }
         return count == WINNING;
+    }
+
+    public boolean isOutside(int row, int column) {
+        if (row >= BOARD_SIZE || column >= BOARD_SIZE || row < 0 || column < 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public Player getCurrentPlayer() {
+        if (isBlackTurn) return Player.BLACK;
+        else return Player.WHITE;
+    }
+
+    public boolean getIsGameOver() {
+        return isGameOver;
+    }
+
+    public int getBoardSize() {
+        return BOARD_SIZE;
+    }
+
+    public char getFirstLetter() {
+        return FIRST_LETTER;
     }
 }

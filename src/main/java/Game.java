@@ -1,42 +1,79 @@
 import java.util.Scanner;
+import java.lang.NumberFormatException;
 
 class Game {
 
-    private static final String exitCommand = "x";
+    private static GameBoard gameBoard;
+    private final int boardSize;
+    private final char firstLetter;
+    private final char lastLetter;
+    private static final String EXIT_COMMAND = "x";
 
-    public void start() { ///////TODO dividere in pezzi
+    public Game(GameBoard gameBoard) {
+        this.gameBoard = gameBoard;
+        boardSize = gameBoard.getBoardSize();
+        firstLetter = gameBoard.getFirstLetter();
+        lastLetter = (char) (firstLetter + boardSize);
+    }
+
+    public void start() {
         Scanner scanner = new Scanner(System.in);
-        scanner.useDelimiter("[\\p{Punct}\\p{javaWhitespace}]+"); //any punctuation characters or whitespaces allowed
-        GameBoard gameBoard = new GameBoard();
-        System.out.println("Hi! This is a Gomoku game.");
-        System.out.println("The first player to put five stones in a row wins!");
-        System.out.println("This is the board:");
         gameBoard.printBoard();
         int row;
         int column;
-        while (!gameBoard.isGameOver) {
+        while (!gameBoard.getIsGameOver()) {
             System.out.println("It's " + gameBoard.getCurrentPlayer().name() + " turn.");
-            System.out.println("Enter your move (row and column): \t[or digit \"" + exitCommand + "\" to exit the game.]");
-            String rowInput = scanner.next();
-            if (rowInput.equalsIgnoreCase(exitCommand)) {
-                System.out.println("Closing the game, bye!");
-                break;
+            System.out.println("Enter your move: \t[or digit \"" + EXIT_COMMAND + "\" to exit the game.]");
+            System.out.print("Insert Row: ");
+            String rowInput = getInput(scanner);
+            if (isExit(rowInput)) System.exit(0);
+            while (!isValidRow(rowInput)) {
+                System.out.print("Invalid input. Please digit a valid Integer: ");
+                rowInput = getInput(scanner);
             }
-            String columnInput = scanner.next().toUpperCase();
-            while (!rowInput.matches("\\d+")) {
-                System.out.println("Please enter a valid row number (you entered \"" + rowInput + "\"):");
-                rowInput = scanner.next();
+            System.out.print("Insert Column: ");
+            String columnInput = getInput(scanner);
+            while (!isValidColumn(columnInput)) {
+                System.out.print("Invalid input. Please digit a valid Character: ");
+                columnInput = getInput(scanner);
             }
-            row = 15 - Integer.valueOf(rowInput);
-            while (!columnInput.matches("[a-zA-Z]")) {
-                System.out.println("Please enter a valid column letter(you entered \"" + columnInput + "\"):");
-                columnInput = scanner.next().toUpperCase();
-            }
-            column = columnInput.charAt(0) - 'A';
-            System.out.println("Position: " + rowInput + ", " + columnInput);
+            row = boardSize - Integer.parseInt(rowInput);
+            char columnChar = columnInput.charAt(0);
+            column = Math.abs(columnInput.charAt(0) - 'A');
+            System.out.println("Position: " + rowInput + ", " + columnChar);
             gameBoard.putAStone(row, column);
         }
         scanner.close();
     }
 
+    public String getInput(Scanner scanner) {
+        return scanner.nextLine().trim().toUpperCase();
+    }
+
+    public boolean isExit(String input) {
+        if (input.equalsIgnoreCase(EXIT_COMMAND)) {
+            System.out.println("Closing the game, bye!");
+            return true;
+        } else
+            return false;
+    }
+
+    public boolean isValidRow(String rowInput) {
+        try {
+            int r = Integer.parseInt(rowInput);
+            if (r > 0 && r <= boardSize)
+                return true;
+            else
+                return false;
+        } catch (NumberFormatException error) {
+            return false;
+        }
+    }
+
+    public boolean isValidColumn(String columnInput) {
+        if (columnInput.matches("[" + firstLetter + "-" + lastLetter + "]")) { //esattamente una lettera compresa tra prima e ultima
+            return true;
+        } else
+            return false;
+    }
 }

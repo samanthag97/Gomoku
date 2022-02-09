@@ -16,10 +16,11 @@ public class Simulate {
             "4\n f\n 2 \nL\n 6\n g\n 4\n J \n9\n j\n 3\n k\n 13\n f\n 5\n i\n 1\n a\n 6\n h\n", //diagonal
             "4\n f\n 5\n L\n 6\n h\n 7\n j\n 9 \nj\n 6\n k\n 13\n f\n 8\n i\n 1 \na\n9\n h\n"   //diagonal
     }) //6 games
-    public void winningGames(String gameMoves){
+    public void winningGames(String gameMoves) {
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
-        Game game = new Game();
+        GameBoard gameBoard = new GameBoard();
+        Game game = new Game(gameBoard);
         game.start();
     }
 
@@ -39,7 +40,8 @@ public class Simulate {
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
         System.setIn(fakeInput);
 
-        Game game = new Game();
+        GameBoard gameBoard = new GameBoard();
+        Game game = new Game(gameBoard);
         game.start();
     }
 
@@ -49,14 +51,15 @@ public class Simulate {
             "1\n a\n 6\n h\n 2\n b \n5\n h\n 4\n d\n 5\n f \n5 \ne \n9 \ni\n 6\n f\n 7\n i\n 3\n c\n",  //diagonal
             "15\n a\n 6\n h\n 14 \nb \n5\n h\n 12\n d\n 5\n f\n 11\n e\n 9\n i\n 10\n f\n 7\n i\n 13\n c\n" //diagonal
     })  //4 games
-    public void notWinningOverlines(String gameMoves){
+    public void notWinningOverlines(String gameMoves) {
         Exception exception = Assertions.assertThrows(NoSuchElementException.class, () -> {
             ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
             System.setIn(fakeInput);
-            Game game = new Game();
+            GameBoard gameBoard = new GameBoard();
+            Game game = new Game(gameBoard);
             game.start();
         });
-        Assertions.assertEquals(null, exception.getMessage());
+        Assertions.assertEquals("No line found", exception.getMessage());
     }
 
 }
