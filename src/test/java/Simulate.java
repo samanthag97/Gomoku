@@ -4,6 +4,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.NoSuchElementException;
 
 public class Simulate {
@@ -17,11 +19,15 @@ public class Simulate {
             "4\n f\n 5\n L\n 6\n h\n 7\n j\n 9 \nj\n 6\n k\n 13\n f\n 8\n i\n 1 \na\n9\n h\n"   //diagonal
     }) //6 games
     public void winningGames(String gameMoves) {
+        PrintStream outputBackup = System.out;
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
+        ByteArrayOutputStream fakeOutput = new ByteArrayOutputStream();
         System.setIn(fakeInput);
+        System.setOut(new PrintStream(fakeOutput));
         GameBoard gameBoard = new GameBoard();
         Game game = new Game(gameBoard);
         game.start();
+        System.setOut(outputBackup);
     }
 
     @Test
@@ -37,12 +43,16 @@ public class Simulate {
         }
         String gameMoves = sb.toString();
 
+        PrintStream outputBackup = System.out;
         ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
+        ByteArrayOutputStream fakeOutput = new ByteArrayOutputStream();
         System.setIn(fakeInput);
-
+        System.setOut(new PrintStream(fakeOutput));
         GameBoard gameBoard = new GameBoard();
         Game game = new Game(gameBoard);
         game.start();
+        System.setOut(outputBackup);
+
     }
 
     @ParameterizedTest
@@ -53,11 +63,15 @@ public class Simulate {
     })  //4 games
     public void notWinningOverlines(String gameMoves) {
         Exception exception = Assertions.assertThrows(NoSuchElementException.class, () -> {
+            PrintStream outputBackup = System.out;
             ByteArrayInputStream fakeInput = new ByteArrayInputStream(gameMoves.getBytes());
+            ByteArrayOutputStream fakeOutput = new ByteArrayOutputStream();
             System.setIn(fakeInput);
+            System.setOut(new PrintStream(fakeOutput));
             GameBoard gameBoard = new GameBoard();
             Game game = new Game(gameBoard);
             game.start();
+            System.setOut(outputBackup);
         });
         Assertions.assertEquals("No line found", exception.getMessage());
     }
