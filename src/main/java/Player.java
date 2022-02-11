@@ -6,7 +6,7 @@ public enum Player {
         this.character = character;
     }
 
-    public char getCharacter() {
+    protected char getCharacter() {
         return character;
     }
 }

@@ -2,7 +2,7 @@ class GameBoard {
 
     private Position[][] board;
     private boolean isBlackTurn;
-    public boolean isGameOver;
+    protected boolean isGameOver;
     private int positionsTaken;
     private static final int WINNING = 5;
     private static final int BOARD_SIZE = 15;
@@ -15,7 +15,7 @@ class GameBoard {
         positionsTaken = 0;
     }
 
-    public void initializeBoard() {
+    private void initializeBoard() {
         board = new Position[BOARD_SIZE][BOARD_SIZE];
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++)
@@ -23,7 +23,7 @@ class GameBoard {
         }
     }
 
-    public void putAStone(int row, int column) {
+    protected void putAStone(int row, int column) {
         if (board[row][column].isTaken())
             System.out.println("This position is already taken! Please digit a valid input.");
         else {
@@ -40,7 +40,7 @@ class GameBoard {
         }
     }
 
-    public void printBoard() {
+    protected void printBoard() {
         System.out.println();
         printLetters();
         for (int i = 0; i < BOARD_SIZE; i++) {
@@ -55,7 +55,7 @@ class GameBoard {
         System.out.println();
     }
 
-    public void printLetters() {
+    private void printLetters() {
         char[] letters = new char[BOARD_SIZE];
         System.out.print("     ");
         for (int i = 0; i < BOARD_SIZE; i++) {
@@ -66,14 +66,14 @@ class GameBoard {
     }
 
 
-    public boolean itsAWin(int row, int column) {
+    private boolean itsAWin(int row, int column) {
         return thereAreFive(row, column, 0, 1, getCurrentPlayer()) || //in row
                 thereAreFive(row, column, 1, 0, getCurrentPlayer()) || //in column
                 thereAreFive(row, column, 1, 1, getCurrentPlayer()) || //in diagonal up-down
                 thereAreFive(row, column, 1, -1, getCurrentPlayer()); //in diagonal down-up
     }
 
-    public boolean thereAreFive(int r, int c, int rDirection, int cDirection, Player player) {
+    private boolean thereAreFive(int r, int c, int rDirection, int cDirection, Player player) {
         int count = 1;
         int row = r + rDirection;
         int column = c + cDirection;
@@ -92,24 +92,24 @@ class GameBoard {
         return count == WINNING;
     }
 
-    public boolean isInside(int row, int column) {
+    private boolean isInside(int row, int column) {
         return row < BOARD_SIZE && column < BOARD_SIZE && row >= 0 && column >= 0;
     }
 
-    public Player getCurrentPlayer() {
+    protected Player getCurrentPlayer() {
         if (isBlackTurn) return Player.BLACK;
         else return Player.WHITE;
     }
 
-    public boolean getIsGameOver() {
+    protected boolean getIsGameOver() {
         return isGameOver;
     }
 
-    public int getBoardSize() {
+    protected int getBoardSize() {
         return BOARD_SIZE;
     }
 
-    public char getFirstLetter() {
+    protected char getFirstLetter() {
         return FIRST_LETTER;
     }
 }

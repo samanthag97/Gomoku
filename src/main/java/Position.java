@@ -5,19 +5,19 @@ public class Position {
         content = Player.EMPTY;
     }
 
-    public void changeContent(Player newContent) {
+    protected void changeContent(Player newContent) {
         content = newContent;
     }
 
-    public Player getContent() {
+    protected Player getContent() {
         return content;
     }
 
-    public boolean isTaken() {
+    protected boolean isTaken() {
         return content != Player.EMPTY;
     }
 
-    public void print() {
+    protected void print() {
         System.out.print(content.getCharacter());
     }
 
