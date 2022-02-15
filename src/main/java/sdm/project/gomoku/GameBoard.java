@@ -99,8 +99,7 @@ class GameBoard {
     }
 
     protected Player getCurrentPlayer() {
-        if (isBlackTurn) return Player.BLACK;
-        else return Player.WHITE;
+        return isBlackTurn ? Player.BLACK : Player.WHITE;
     }
 
     protected boolean getIsGameOver() {
