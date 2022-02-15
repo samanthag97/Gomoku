@@ -1,6 +1,6 @@
 package sdm.project.gomoku;
 
-public enum Player {
+enum Player {
     BLACK('B'), WHITE('W'), EMPTY('+');
     private final char character;
 
@@ -8,7 +8,7 @@ public enum Player {
         this.character = character;
     }
 
-    protected char getCharacter() {
+    char getCharacter() {
         return character;
     }
 }
