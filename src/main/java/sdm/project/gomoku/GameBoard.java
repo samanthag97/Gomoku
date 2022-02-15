@@ -1,3 +1,5 @@
+package sdm.project.gomoku;
+
 class GameBoard {
 
     private Position[][] board;

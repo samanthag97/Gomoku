@@ -1,3 +1,5 @@
+package sdm.project.gomoku;
+
 public class Position {
     private Player content;
 

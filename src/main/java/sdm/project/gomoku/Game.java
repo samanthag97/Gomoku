@@ -1,3 +1,5 @@
+package sdm.project.gomoku;
+
 import java.util.Scanner;
 import java.lang.NumberFormatException;
 

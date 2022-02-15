@@ -1,3 +1,5 @@
+package sdm.project.gomoku;
+
 public enum Player {
     BLACK('B'), WHITE('W'), EMPTY('+');
     private final char character;
