@@ -24,7 +24,7 @@ public class Simulate {
         GameBoard gameBoard = new GameBoard();
         Game game = new Game(gameBoard);
         game.start();
-        Assertions.assertEquals(true, gameBoard.getIsGameOver());
+        Assertions.assertTrue(gameBoard.getIsGameOver());
     }
 
     @Test
@@ -45,7 +45,7 @@ public class Simulate {
         GameBoard gameBoard = new GameBoard();
         Game game = new Game(gameBoard);
         game.start();
-        Assertions.assertEquals(true, gameBoard.getIsGameOver());
+        Assertions.assertTrue(gameBoard.getIsGameOver());
     }
 
     @ParameterizedTest
