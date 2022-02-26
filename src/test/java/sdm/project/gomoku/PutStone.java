@@ -3,25 +3,22 @@ package sdm.project.gomoku;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-
-public class DisplayerTest {
+public class PutStone {
 
     @Test
     public void stoneAtRow10ColumnH() {
-        GameBoard board = new GameBoard();
-        PrintStream old = System.out;
-        ByteArrayOutputStream b = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(b));
+        GameBoard gameBoard = new GameBoard();
+        PrintStream oldBoard = System.out;
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(output));
 
-        board.putAStone(5, 7);
+        gameBoard.putAStone(5, 7);
 
-        System.setOut((old));
-        String output = new String(b.toByteArray());
+        System.setOut((oldBoard));
+        String outputString = new String(output.toByteArray());
         
         String expected = System.lineSeparator() + "     A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  " + System.lineSeparator() +
                 " 15  +  +  +  +  +  +  +  +  +  +  +  +  +  +  +  15" + System.lineSeparator() +
@@ -41,6 +38,7 @@ public class DisplayerTest {
                 "  1  +  +  +  +  +  +  +  +  +  +  +  +  +  +  +  1" + System.lineSeparator() +
                 "     A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  " + System.lineSeparator() + System.lineSeparator();
 
-        Assertions.assertEquals(expected, output);
+        Assertions.assertEquals(expected, outputString);
+
     }
 }
