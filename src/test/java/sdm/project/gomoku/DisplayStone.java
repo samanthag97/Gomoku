@@ -87,7 +87,7 @@ public class DisplayStone {
         ByteArrayOutputStream fakeOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeOutput));
 
-        gameBoard.putAStone(row, column);
+        gameBoard.putAStoneAndPrint(row, column);
 
         System.setOut((oldOutput));
         String outputString = fakeOutput.toString();
@@ -96,7 +96,7 @@ public class DisplayStone {
 
     @Test
     public void withAlternatingColors() {
-        String expectedBoard = BOARD_10_H +
+        String expectedBoards = BOARD_10_H +
                                "\n" +
                                "     A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  \n" +
                                " 15  +  +  +  +  +  +  +  +  +  +  +  +  +  +  +  15\n" +
@@ -140,12 +140,12 @@ public class DisplayStone {
         ByteArrayOutputStream fakeOutput = new ByteArrayOutputStream();
         System.setOut(new PrintStream(fakeOutput));
 
-        gameBoard.putAStone(5, 7);
-        gameBoard.putAStone(5, 8);
-        gameBoard.putAStone(5, 9);
+        gameBoard.putAStoneAndPrint(5, 7);
+        gameBoard.putAStoneAndPrint(5, 8);
+        gameBoard.putAStoneAndPrint(5, 9);
 
         System.setOut((oldOutput));
         String outputString = fakeOutput.toString();
-        Assertions.assertEquals(expectedBoard, outputString);
+        Assertions.assertEquals(expectedBoards, outputString);
     }
 }

@@ -25,7 +25,7 @@ class GameBoard {
         }
     }
 
-    protected void putAStone(int row, int column) {
+    protected void putAStoneAndPrint(int row, int column) {
         if (board[row][column].isTaken())
             System.out.println("This position is already taken! Please digit a valid input.");
         else {

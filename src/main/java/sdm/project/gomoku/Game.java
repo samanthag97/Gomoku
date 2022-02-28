@@ -47,7 +47,7 @@ class Game {
             char columnChar = columnInput.charAt(0);
             column = Math.abs(columnInput.charAt(0) - 'A');
             System.out.println("Your move: " + rowInput + ", " + columnChar);
-            gameBoard.putAStone(row, column);
+            gameBoard.putAStoneAndPrint(row, column);
         }
         scanner.close();
     }
